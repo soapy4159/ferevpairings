@@ -40,3 +40,6 @@ table, tr, td {
     padding-left: 1em;
     margin-left: 1em;
 }
+#revSpoiler {
+    display: none;
+}
