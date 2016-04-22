@@ -245,7 +245,6 @@ function updateClass(unit) {
         if(ccO != noClass) {
             clOpts.push(cc);
             for(var j = 0; j < ccO.promotesTo.length; j++) { //for each promoted class
-    //            console.log(ccO.promotesTo[j]);
                 if($.inArray(getSexedClass(ccO.promotesTo[j], unit)) == -1) { //if sexed class is not in array
                     clOpts.push(getSexedClass(ccO.promotesTo[j], unit));
                 }
@@ -259,13 +258,13 @@ function updateClass(unit) {
         var fromF = getSexedClass(fp.baseClass[0], unit);
         var fromS = getSexedClass(sp.baseClass[0], unit);
         //determining inheritance from first parent...
-        if(fromF != "-") { //don't think this should ever evaluate to false, but you've got to say safe, citizen!
-            if(fromF == "Songstress") { //if fp is azura
-                fromF = "Troubadour"; //shiggy gets troubadour
-            }
-            else if(fromF == bc && fp.baseClass.length != 1) { //if same class
-                fromF = fp.baseClass[1]; //set to fp's second class
-            }
+        if(fromF == "Songstress") { //if fp is azura
+            fromF = "Troubadour"; //shiggy gets troubadour
+        }
+        else if(fromF == bc && fp.baseClass.length != 1) { //if same class
+            fromF = fp.baseClass[1]; //set to fp's second class
+        }
+        if(fromF != "-") {
             x = getSexedClass(fromF, unit);
             if($.inArray(x, clOpts) == -1) { //if fromF is not kid's base class
                 clOpts.push(x);
@@ -281,8 +280,10 @@ function updateClass(unit) {
                 }
             }
         }
+        else {
+        }
         //determining second parent inheritance...
-        if(sp != noPar) { //if sp has been selected
+        if(fromS != "-") { //if sp has been selected
             if(fromS == "Songstress") { //if sp is azura
                 fromS = sp.baseClass[1]; //give sky knight
                 if(fromS == bc || fromS == fromF) { //if already has sky knight
@@ -512,6 +513,8 @@ function updateTalent() {
         corrinM.baseClass.push(mct);
         updateClass(corrinF);
         updateClass(corrinM);
+        updateViewF(corrinF);
+        updateViewF(corrinM);
     }
     var corrinsKids = [kanaF, kanaM]; //tracks corrin's kids, kanas added automatically
     $.each($(".sp"), function() { //for each second parent select
@@ -522,8 +525,7 @@ function updateTalent() {
         }
     });
     for(var i = 0; i < corrinsKids.length; i++) { //for each of corrin's kids
-        updateInnerChild(corrinsKids[i]);
-        updateView(corrinsKids[i]);
+        console.log("updating inner child: " + corrinsKids[i].n);
         if(i <= 1) { //if kanas
             updateClass(corrinsKids[i]);
         }
