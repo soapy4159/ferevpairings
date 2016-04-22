@@ -8,7 +8,7 @@ $(document).ready(function() { //on document load
     createPage();
     createFG();
     fillFGClasses();
-    gogogo(); //call it
+    gogogo(); //gogogo!!
 
 }); 
 function gogogo() {
@@ -28,7 +28,8 @@ function gogogo() {
         }
         //creating and appending type option tags...
         $(this).append($("<option></option>").val("mods").text("Stat Modifiers"));
-        $(this).append($("<option></option>").val("grs").text("Growth Rates"));
+        $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
+        $(this).append($("<option></option>").val("grs").text("Effective Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
         $(this).change(function() { //assign event handler
             updateInnerChild(kiddo);
@@ -46,6 +47,7 @@ function gogogo() {
         }
         //creating and appending type option tags...
         $(this).append($("<option></option>").val("mods").text("Stat Modifiers"));
+        $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
         $(this).append($("<option></option>").val("grs").text("Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
         $(this).change(function() { //assign event handler
@@ -100,8 +102,19 @@ function gogogo() {
             updateClass(kiddo);
         });
     });
+    $("#toggleSpoiler").click(function() { //assign event handler
+        $("#revSpoiler").toggle(); //hide or expand spoiler div
+        if($(this).text() == "+") { //if was hidden
+            $(this).text("-");
+            $("#revShowHide").text("Hide");
+        }
+        else { //otherwise
+            $(this).text("+");
+            $("#revShowHide").text("Show");
+        }
+    });
     $("#toggleFG").click(function() { //assign event handler
-        $("#firstGen").toggle(); //hides or expands first gen table
+        $("#firstGen").toggle(); //hide or expand first gen table
         if($(this).text() == "-") { //if was expanded
             $(this).text("+");
             $("#fgShowHide").text("Show");
@@ -471,12 +484,16 @@ function updateView(kid) {
         $("#" + v + "RS").empty().text("No"); //peasant!
     }
     var modArr = getModArr(kid);
+    var baseGRArr = getGRBaseArr(kid);
     var grArr = getGRArrU(kid);
     var maxClArr = getMaxStatArr(getCl(v));
     for(var i = 0; i < statArr.length; i++) { //for each stat
         var j; //initialize j-- mod, gr, or max stat value
         if($("#" + v + "Type").val() == "mods") {//if mods selected
-                j = modArr[i]; //set to stat mod
+            j = modArr[i]; //set to stat mod
+        }
+        else if($("#" + v + "Type").val() == "bases") {
+            j = baseGRArr[i];
         }
         else if($("#" + v + "Type").val() == "grs") {//if grs selected
             j = grArr[i]; //set to gr
@@ -660,6 +677,9 @@ function updateViewF(unit) {
         var j;
         if($("#" + unit.vName + "Type").val() == "mods") { //mods selected
             j = modArrU[i];
+        }
+        else if($("#" + unit.vName + "Type").val() == "bases") {
+            j = grArrU[i];
         }
         else if($("#" + unit.vName + "Type").val() == "grs") { //if grs selected
             j = grArrU[i] + grArrC[i];
