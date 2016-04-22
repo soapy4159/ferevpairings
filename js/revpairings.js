@@ -260,7 +260,6 @@ function updateClass(unit) {
                 fromF = "Troubadour"; //shiggy gets troubadour
             }
             else if(fromF == bc && fp.baseClass.length != 1) { //if same class
-    //            console.log("first parents first class option is kid's base class. getting first parent's second class option, \"" + fp.baseClass[1] + "\"");
                 fromF = fp.baseClass[1]; //set to fp's second class
             }
             x = getSexedClass(fromF, unit);
