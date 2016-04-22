@@ -525,7 +525,6 @@ function updateTalent() {
         }
     });
     for(var i = 0; i < corrinsKids.length; i++) { //for each of corrin's kids
-        console.log("updating inner child: " + corrinsKids[i].n);
         if(i <= 1) { //if kanas
             updateClass(corrinsKids[i]);
         }
