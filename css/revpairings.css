@@ -1,0 +1,42 @@
+body {
+    background-color: lightgray;
+}
+table, tr, td {
+    padding: 5px;
+}
+.odd {
+    background: #dfeae7;
+}
+.even {
+    background: #c1cfdd;
+}
+.clF, .clK {
+    width: 120px;
+}
+.sp {
+    width: 90px;
+}
+.sv {
+    width: 50px;
+    text-align: center;
+}
+.n {
+    width: 100px;
+}
+.cs {
+    width: 50px;
+}
+.ra {
+    text-align: center;
+}
+.lpad {
+    padding-left:30px;
+}
+#info {
+    text-align: right;
+    font-size: 11px;
+}
+#fyi {
+    padding-left: 1em;
+    margin-left: 1em;
+}

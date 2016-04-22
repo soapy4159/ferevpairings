@@ -1,0 +1,124 @@
+<!--- rp2.html ---!>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fire Emblem Fates Calculator</title>
+        <link rel="stylesheet" href="css/revpairings.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+        <script>
+            $.getScript("js/bb.js", function() {
+                console.log("bb.js loaded");
+            });
+            $.getScript("js/classes.js", function() {
+                console.log("classes.js loaded");
+            });
+            $.getScript("js/units.js", function() {
+                console.log("units.js loaded");
+            });
+        </script>
+        <script type="text/javascript" src="js/revpairings.js"></script>
+    </head>
+    <body>
+        <div id="info">
+            soapy made this.
+            <br>
+            version: "I think it works!"
+        </div>
+        <h3>Fire Emblem Fates Calculator</h3>
+        <div id="content">
+            Customize Your Corrin:
+            <table id="corrinBoonBane">
+                <tr>
+                    <td>Boon:</td>
+                    <td><select id="boonSelect" class="boonSelect"></select></td>
+                    <td>Bane:</td>
+                    <td><select id="baneSelect" class="baneSelect"></select></td>
+                    <td>Talent:</td>
+                    <td><select id="talentSelect" class="talentSelect"></select></td>
+                </tr>
+            </table>
+            <table id="corrinStats" class="stats lpad" unit="Corrin (F)">
+                <tr>
+                    <td></td>
+                    <td class="sv">HP</td>
+                    <td class="sv">Str</td>
+                    <td class="sv">Mag</td>
+                    <td class="sv">Skl</td>
+                    <td class="sv">Spd</td>
+                    <td class="sv">Lck</td>
+                    <td class="sv">Def</td>
+                    <td class="sv">Res</td>
+                </tr>
+                <tr class="odd">
+                    <td>Stat Modifiers</td>
+                    <td id="corrinHP" class="sv"></td>
+                    <td id="corrinStr" class="sv"></td>
+                    <td id="corrinMag" class="sv"></td>
+                    <td id="corrinSkl" class="sv"></td>
+                    <td id="corrinSpd" class="sv"></td>
+                    <td id="corrinLck" class="sv"></td>
+                    <td id="corrinDef" class="sv"></td>
+                    <td id="corrinRes" class="sv"></td>
+                </tr>
+                <tr class="even">
+                    <td>Growth Rates</td>
+                    <td id="corrinHPGR" class="sv"></td>
+                    <td id="corrinStrGR" class="sv"></td>
+                    <td id="corrinMagGR" class="sv"></td>
+                    <td id="corrinSklGR" class="sv"></td>
+                    <td id="corrinSpdGR" class="sv"></td>
+                    <td id="corrinLckGR" class="sv"></td>
+                    <td id="corrinDefGR" class="sv"></td>
+                    <td id="corrinResGR" class="sv"></td>
+                </tr>
+            </table>
+            <br>
+            <div id="fg">
+                <button type="button" id="toggleFG">-</button>
+                <span id="fgShowHide">Hide</span> First Generation Units
+                <table id="firstGen" class="lpad">
+                    <tr>
+                        <td>Unit</td>
+                        <td>Royalty?</td>
+                        <td>Class</td>
+                        <td>Displaying</td>
+                        <td class="sv">HP</td>
+                        <td class="sv">Str</td>
+                        <td class="sv">Mag</td>
+                        <td class="sv">Skl</td>
+                        <td class="sv">Spd</td>
+                        <td class="sv">Lck</td>
+                        <td class="sv">Def</td>
+                        <td class="sv">Res</td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div id="kids">
+                <button type="button" id="toggleK">-</button>
+                <span id="kidsShowHide">Hide</span> Child Units
+                <div id="kds" class="lpad">
+                    <span id="fyi">Mods shown when no parent is selected assume the second parent will NOT be a child.</span>
+                    <table id="kiddies">
+                        <tr>
+                            <td>Child</td>
+                            <td>First Parent</td>
+                            <td>Second Parent</td>
+                            <td>Royalty?</td>
+                            <td>Class</td>
+                            <td>Displaying</td>
+                            <td class="sv">HP</td>
+                            <td class="sv">Str</td>
+                            <td class="sv">Mag</td>
+                            <td class="sv">Skl</td>
+                            <td class="sv">Spd</td>
+                            <td class="sv">Lck</td>
+                            <td class="sv">Def</td>
+                            <td class="sv">Res</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
