@@ -527,6 +527,8 @@ function updateTalent() {
         if(i <= 1) { //if kanas
             updateClass(corrinsKids[i]);
         }
+        updateInnerChild(corrinsKids[i]);
+        updateView(corrinsKids[i]);
     }
 }
 /* accepts mod string, int val, and unit object and updates the unit's mod to val */
