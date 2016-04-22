@@ -1,4 +1,4 @@
-//rp2.js
+//revpairings.js
 /* baby app to calculate stat mods, growth rates, max stats, and class inheritance for fe fates units. matchmake away! 
  *
  * Sophie Laupheimer
