@@ -1,10 +1,14 @@
-//rp2.js
+//revpairings.js
+/* baby app to calculate stat mods, growth rates, max stats, and class inheritance for fe fates units. matchmake away! 
+ *
+ * Sophie Laupheimer
+ */
 "use strict";
 $(document).ready(function() { //on document load
     createPage();
     createFG();
     fillFGClasses();
-    gogogo(); //call it
+    gogogo(); //gogogo!!
 
 }); 
 function gogogo() {
@@ -24,7 +28,8 @@ function gogogo() {
         }
         //creating and appending type option tags...
         $(this).append($("<option></option>").val("mods").text("Stat Modifiers"));
-        $(this).append($("<option></option>").val("grs").text("Growth Rates"));
+        $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
+        $(this).append($("<option></option>").val("grs").text("Effective Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
         $(this).change(function() { //assign event handler
             updateInnerChild(kiddo);
@@ -42,6 +47,7 @@ function gogogo() {
         }
         //creating and appending type option tags...
         $(this).append($("<option></option>").val("mods").text("Stat Modifiers"));
+        $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
         $(this).append($("<option></option>").val("grs").text("Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
         $(this).change(function() { //assign event handler
@@ -63,18 +69,18 @@ function gogogo() {
             updateView(kiddo);
         });
     });
-    $(".clF").each(function() {
+    $(".clF").each(function() { //for each first gen class select
         var unit = $(this).data("unit");
         var unitO = noPar;
-        for(var i = 0; i < allFG.length; i++) {
-            if(unit == allFG[i].n) {
+        for(var i = 0; i < allFG.length; i++) { //for each first gen
+            if(unit == allFG[i].n) { //if found match
                 unitO = allFG[i];
-                i = allFG.length;
+                i = allFG.length; //end loop
             }
         }
         updateClass(unitO);
         updateViewF(unitO);
-        $(this).change(function() {
+        $(this).change(function() { //assign event handler
             updateViewF(unitO);
         });
     });
@@ -96,24 +102,35 @@ function gogogo() {
             updateClass(kiddo);
         });
     });
-    $("#toggleFG").click(function() {
-        $("#firstGen").toggle();
-        if($(this).text() == "-") {
+    $("#toggleSpoiler").click(function() { //assign event handler
+        $("#revSpoiler").toggle(); //hide or expand spoiler div
+        if($(this).text() == "+") { //if was hidden
+            $(this).text("-");
+            $("#revShowHide").text("Hide");
+        }
+        else { //otherwise
+            $(this).text("+");
+            $("#revShowHide").text("Show");
+        }
+    });
+    $("#toggleFG").click(function() { //assign event handler
+        $("#firstGen").toggle(); //hide or expand first gen table
+        if($(this).text() == "-") { //if was expanded
             $(this).text("+");
             $("#fgShowHide").text("Show");
         }
-        else {
+        else { //otherwise
             $(this).text("-");
             $("#fgShowHide").text("Hide");
         }
     });
-    $("#toggleK").click(function() {
-        $("#kds").toggle();
-        if($(this).text() == "-") {
+    $("#toggleK").click(function() { //assign event handler
+        $("#kds").toggle(); //hides or expands kid table
+        if($(this).text() == "-") { //if was expanded
             $(this).text("+");
             $("#kidsShowHide").text("Show");
         }
-        else {
+        else { //otherwise
             $(this).text("-");
             $("#kidsShowHide").text("Hide");
         }
@@ -196,6 +213,7 @@ function updateBoonBane() {
             updateMod(statArr[i], boModArr[i] + baModArr[i], corrinM);
         }
     }
+    /* fills the bb table with corrin's current info and modifies all their kids */
     fillBBTable(); //display mod and gr info
     updateViewF(corrinF);
     updateViewF(corrinM);
@@ -240,7 +258,6 @@ function updateClass(unit) {
         if(ccO != noClass) {
             clOpts.push(cc);
             for(var j = 0; j < ccO.promotesTo.length; j++) { //for each promoted class
-    //            console.log(ccO.promotesTo[j]);
                 if($.inArray(getSexedClass(ccO.promotesTo[j], unit)) == -1) { //if sexed class is not in array
                     clOpts.push(getSexedClass(ccO.promotesTo[j], unit));
                 }
@@ -254,14 +271,13 @@ function updateClass(unit) {
         var fromF = getSexedClass(fp.baseClass[0], unit);
         var fromS = getSexedClass(sp.baseClass[0], unit);
         //determining inheritance from first parent...
-        if(fromF != "-") { //don't think this should ever evaluate to false, but you've got to say safe, citizen!
-            if(fromF == "Songstress") { //if fp is azura
-                fromF = "Troubadour"; //shiggy gets troubadour
-            }
-            else if(fromF == bc && fp.baseClass.length != 1) { //if same class
-    //            console.log("first parents first class option is kid's base class. getting first parent's second class option, \"" + fp.baseClass[1] + "\"");
-                fromF = fp.baseClass[1]; //set to fp's second class
-            }
+        if(fromF == "Songstress") { //if fp is azura
+            fromF = "Troubadour"; //shiggy gets troubadour
+        }
+        else if(fromF == bc && fp.baseClass.length != 1) { //if same class
+            fromF = fp.baseClass[1]; //set to fp's second class
+        }
+        if(fromF != "-") {
             x = getSexedClass(fromF, unit);
             if($.inArray(x, clOpts) == -1) { //if fromF is not kid's base class
                 clOpts.push(x);
@@ -277,8 +293,10 @@ function updateClass(unit) {
                 }
             }
         }
+        else {
+        }
         //determining second parent inheritance...
-        if(sp != noPar) { //if sp has been selected
+        if(fromS != "-") { //if sp has been selected
             if(fromS == "Songstress") { //if sp is azura
                 fromS = sp.baseClass[1]; //give sky knight
                 if(fromS == bc || fromS == fromF) { //if already has sky knight
@@ -333,6 +351,12 @@ function updateClass(unit) {
         var opt = document.createElement("option"); //make option
         $(opt).val(clOpts[i]).text(clOpts[i]); //add attr
         $("#" + v + "Class").append(opt); //append to class select
+    }
+    if(unit.isChild) {
+        updateView(unit);
+    }
+    else {
+        updateViewF(unit);
     }
 }
 /* accepts a class string and a unit object and returns the class string that corresponds to the kid's sex */
@@ -466,12 +490,16 @@ function updateView(kid) {
         $("#" + v + "RS").empty().text("No"); //peasant!
     }
     var modArr = getModArr(kid);
+    var baseGRArr = getGRBaseArr(kid);
     var grArr = getGRArrU(kid);
     var maxClArr = getMaxStatArr(getCl(v));
     for(var i = 0; i < statArr.length; i++) { //for each stat
         var j; //initialize j-- mod, gr, or max stat value
         if($("#" + v + "Type").val() == "mods") {//if mods selected
-                j = modArr[i]; //set to stat mod
+            j = modArr[i]; //set to stat mod
+        }
+        else if($("#" + v + "Type").val() == "bases") {
+            j = baseGRArr[i];
         }
         else if($("#" + v + "Type").val() == "grs") {//if grs selected
             j = grArr[i]; //set to gr
@@ -508,6 +536,8 @@ function updateTalent() {
         corrinM.baseClass.push(mct);
         updateClass(corrinF);
         updateClass(corrinM);
+        updateViewF(corrinF);
+        updateViewF(corrinM);
     }
     var corrinsKids = [kanaF, kanaM]; //tracks corrin's kids, kanas added automatically
     $.each($(".sp"), function() { //for each second parent select
@@ -518,11 +548,11 @@ function updateTalent() {
         }
     });
     for(var i = 0; i < corrinsKids.length; i++) { //for each of corrin's kids
-        updateInnerChild(corrinsKids[i]);
-        updateView(corrinsKids[i]);
         if(i <= 1) { //if kanas
             updateClass(corrinsKids[i]);
         }
+        updateInnerChild(corrinsKids[i]);
+        updateView(corrinsKids[i]);
     }
 }
 /* accepts mod string, int val, and unit object and updates the unit's mod to val */
@@ -576,45 +606,47 @@ function updateGR(gr, val, unit) {
         unit.resGR = val;
     }
 }
+/* creates the fgTable */
 function createFG() {
-    for(var i = 0; i < allFG.length; i++) {
+    for(var i = 0; i < allFG.length; i++) { //for each fg
         var unit = allFG[i];
         var unitV = unit.vName;
-        var row = document.createElement("tr");
-        $(row).attr("id", unitV + "Stats").addClass("stats");
+        var row = document.createElement("tr"); //made tr for fg
+        $(row).attr("id", unitV + "Stats").addClass("stats"); //assign props
         if(i % 2 == 0) { //if even
             $(row).addClass("even"); //add even class
         }
         else { //if odd
             $(row).addClass("odd"); //add odd class
         }
-        var fgName = document.createElement("td");
-        $(fgName).addClass("n").text(unit.n);
-        var rs = document.createElement("td");
-        $(rs).attr("id", unitV + "RS").addClass("rs");
-        if(unit.isRoyal) {
+        var fgName = document.createElement("td"); //make td to display name
+        $(fgName).addClass("n").text(unit.n); //assign props
+        var rs = document.createElement("td"); //make td to display royal status
+        $(rs).attr("id", unitV + "RS").addClass("rs"); //assign props
+        if(unit.isRoyal) { //if royal
             $(rs).text("Yes");
         }
-        else {
+        else { //if not
             $(rs).text("No");
         }
-        var cl = document.createElement("td");
-        var clSelect = document.createElement("select");
-        $(clSelect).attr("id", unitV + "Class").attr("data-unit", unit.n).addClass("clF");
-        $(cl).append(clSelect);
-        var type = document.createElement("td");
-        var typeSelect = document.createElement("select");
-        $(typeSelect).attr("id", unitV + "Type").attr("data-unit", unit.n).addClass("typeF");
-        $(type).append(typeSelect);
-        $(row).append(fgName).append(rs).append(cl).append(type);
+        var cl = document.createElement("td");  //make td for class select
+        var clSelect = document.createElement("select"); //make class select for fg
+        $(clSelect).attr("id", unitV + "Class").attr("data-unit", unit.n).addClass("clF"); //assign props
+        $(cl).append(clSelect); //append to td
+        var type = document.createElement("td"); //make td for display select
+        var typeSelect = document.createElement("select"); //make display select
+        $(typeSelect).attr("id", unitV + "Type").attr("data-unit", unit.n).addClass("typeF"); //assign props
+        $(type).append(typeSelect); //append to td
+        $(row).append(fgName).append(rs).append(cl).append(type); //append to row
         for(var j = 0; j < statArr.length; j++) { //for each stat
             var statCol = document.createElement("td"); //create td for stat display
             $(statCol).attr("id", unitV + statArr[j]).addClass("sv"); //add attrs
             $(row).append(statCol); //append to row
         }
-        $("#firstGen").append(row);
+        $("#firstGen").append(row); //append to table
     }
 }
+/* fills the class selects for the fg units */
 function fillFGClasses() {
     for(var i = 0; i < allFG.length; i++) { //for each first gen unit
         var unit = allFG[i];
@@ -627,38 +659,42 @@ function fillFGClasses() {
             var bcj = getClO(bc[j]);
             if(bcj != noClass) {//if not talentless avatar
                 clOpts.push(bcj.n);
-                    for(var k = 0; k < bcj.promotesTo.length; k++) {
-                        if($.inArray(getSexedClass(bcj.promotesTo[k].n, unit), clOpts) == -1) {
+                    for(var k = 0; k < bcj.promotesTo.length; k++) { //for each promote
+                        if($.inArray(getSexedClass(bcj.promotesTo[k].n, unit), clOpts) == -1) { //if not in array
                             clOpts.push(getSexedClass(bcj.promotesTo[k], unit));
                         }
                     }
             }
         }
-        for(var j = 0; j < clOpts.length; j++) {
-            var opt = document.createElement("option");
-            $(opt).attr("value", clOpts[j]).text(clOpts[j]);
-            $(select).append(opt);
+        for(var j = 0; j < clOpts.length; j++) { //for each class option
+            var opt = document.createElement("option"); //make option tag
+            $(opt).attr("value", clOpts[j]).text(clOpts[j]); //assign props
+            $(select).append(opt); //append to select
         }
     }
 }
+/* update displayed information of fg unit */
 function updateViewF(unit) {
     var modArrU = getModArr(unit);
     var grArrU = getGRArrU(unit);
     var grArrC = getGRArrC(getCl(unit.vName));
     var maxStatArr = getMaxStatArr(getCl(unit.vName));
-    for(var i = 0; i < statArr.length; i++) {
+    for(var i = 0; i < statArr.length; i++) { //for each stat
         var j;
-        if($("#" + unit.vName + "Type").val() == "mods") {
+        if($("#" + unit.vName + "Type").val() == "mods") { //mods selected
             j = modArrU[i];
         }
-        else if($("#" + unit.vName + "Type").val() == "grs") {
+        else if($("#" + unit.vName + "Type").val() == "bases") {
+            j = grArrU[i];
+        }
+        else if($("#" + unit.vName + "Type").val() == "grs") { //if grs selected
             j = grArrU[i] + grArrC[i];
         }
-        else {
-            if(i == 0) {
+        else { //if max stats selected
+            if(i == 0) { //if hp
                 j = maxStatArr[i];
             }
-            else {
+            else { //otherwise
                 j = maxStatArr[i] + modArrU[i];
             }
         }
