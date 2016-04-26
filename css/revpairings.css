@@ -13,7 +13,7 @@ table, tr, td {
 .clF, .clK {
     width: 120px;
 }
-.sp {
+.sp, .apl, .spl {
     width: 90px;
 }
 .sv {
@@ -36,7 +36,7 @@ table, tr, td {
     text-align: right;
     font-size: 11px;
 }
-#fyi {
+.fyi {
     padding-left: 1em;
     margin-left: 1em;
 }
