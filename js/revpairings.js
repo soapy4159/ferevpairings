@@ -7,9 +7,7 @@
 $(document).ready(function() { //on document load
     createPage();
     createFG();
-    fillFGClasses();
     gogogo(); //gogogo!!
-
 }); 
 function gogogo() {
     fillBoonBaneTalent(); //add option tags to boon/bane/talent select boxes
@@ -18,88 +16,85 @@ function gogogo() {
     $("#baneSelect").change(updateBoonBane); //""
     $("#talentSelect").change(updateTalent); //""
     $(".typeK").each(function() { //for each display option
-        var kid = $(this).data("unit"); //get kid name
-        var kiddo = noPar;
-        for(var i = 0; i < allKiddies.length; i++) { //for each kid
-            if(kid == allKiddies[i].n) { //if kid matches
-                kiddo = allKiddies[i];
-                i = allKiddies.length; //end loop
-            }
-        }
+        var kid = getUnitO($(this).data("unit"));
         //creating and appending type option tags...
         $(this).append($("<option></option>").val("mods").text("Stat Modifiers"));
         $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
         $(this).append($("<option></option>").val("grs").text("Effective Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
         $(this).change(function() { //assign event handler
-            updateInnerChild(kiddo);
-            updateView(kiddo)
+            updateInnerChild(kid);
+            updateView(kid)
         });
     });
     $(".typeF").each(function() { //for each display option
-        var unit = $(this).data("unit"); //get unit name
-        var unitO = noPar;
-        for(var i = 0; i < allFG.length; i++) { //for each unit
-            if(unit == allFG[i].n) { //if unit matches
-                unitO = allFG[i];
-                i = allFG.length; //end loop
-            }
-        }
+        var unit = getUnitO($(this).data("unit"));
         //creating and appending type option tags...
         $(this).append($("<option></option>").val("mods").text("Stat Modifiers"));
         $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
-        $(this).append($("<option></option>").val("grs").text("Growth Rates"));
+        $(this).append($("<option></option>").val("grs").text("Effective Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
         $(this).change(function() { //assign event handler
-            updateViewF(unitO);
+            updateViewF(unit);
         });
     });
     $(".clK").each(function() { //for each class select
-        var kid = $(this).data("unit"); //get kid name
-        var kiddo = noPar;
-        for(var i = 0; i < allKiddies.length; i++) { //for each kid
-            if(kid == allKiddies[i].n) { //if matching kid
-                kiddo = allKiddies[i];
-                i == allKiddies.length; //end loop
-            }
-        }
-        updateClass(kiddo); //update class
+        var kid = getUnitO($(this).data("unit"));
+        clDir("", kid);
         $(this).change(function() { //assign event handler
-            updateInnerChild(kiddo);
-            updateView(kiddo);
+            updateInnerChild(kid);
+            updateView(kid);
         });
     });
     $(".clF").each(function() { //for each first gen class select
-        var unit = $(this).data("unit");
-        var unitO = noPar;
-        for(var i = 0; i < allFG.length; i++) { //for each first gen
-            if(unit == allFG[i].n) { //if found match
-                unitO = allFG[i];
-                i = allFG.length; //end loop
-            }
+        var unit = getUnitO($(this).data("unit"));
+        if(unit == corrinF || unit == corrinM) {
+            fillCorrinClass(unit);
         }
-        updateClass(unitO);
-        updateViewF(unitO);
+        else {
+            clDir("", unit);
+        }
+        updateViewF(unit);
         $(this).change(function() { //assign event handler
-            updateViewF(unitO);
+            updateViewF(unit);
         });
     });
     $(".sp").each(function() { //for each sp select box
-        var kid = $(this).data("unit"); //get kid name
-        var kiddo = noPar;
-        for(var i = 0; i < allKiddies.length; i++) { //for each kid
-            if(kid == allKiddies[i].n) { //if matching kid
-                kiddo = allKiddies[i];
-                i = allKiddies.length; //end loop
-            }
-        }
-        fillKid(kiddo);
-        updateView(kiddo);
-        updateClass(kiddo)
+        var kid = getUnitO($(this).data("unit"));
+        fillKid(kid);
+        updateView(kid);
         $(this).change(function() { //assign event handler
-            updateInnerChild(kiddo);
-            updateView(kiddo);
-            updateClass(kiddo);
+            clDir("sp", kid);
+            updateInnerChild(kid);
+            updateView(kid);
+        });
+    });
+    $(".apl").each(function() { //for each bff select
+        var unit = getUnitO($(this).data("unit"));
+        var noBFF = document.createElement("option");
+        $(noBFF).val("-").text("-");
+        $(this).append(noBFF);
+        for(var i = 0; i < unit.bff.length; i++) { //fill options
+            var opt = document.createElement("option");
+            $(opt).val(unit.bff[i]).text(unit.bff[i]);
+            $(this).append(opt);
+        }
+        $(this).change(function() { //assign event handler
+            clDir("apl", unit);
+        });
+    });
+    $(".spl").each(function() { //for each s select
+        var unit = getUnitO($(this).data("unit"));
+        var noLove = document.createElement("option");
+        $(noLove).val("-").text("-");
+        $(this).append(noLove);
+        for(var i = 0; i < unit.sRank.length; i++) { //fill options
+            var opt = document.createElement("option");
+            $(opt).val(unit.sRank[i]).text(unit.sRank[i]);
+            $(this).append(opt);
+        }
+        $(this).change(function() { //assign event handler
+            clDir("spl", unit);
         });
     });
     $("#toggleSpoiler").click(function() { //assign event handler
@@ -114,7 +109,7 @@ function gogogo() {
         }
     });
     $("#toggleFG").click(function() { //assign event handler
-        $("#firstGen").toggle(); //hide or expand first gen table
+        $("#ffs").toggle(); //hide or expand first gen table
         if($(this).text() == "-") { //if was expanded
             $(this).text("+");
             $("#fgShowHide").text("Show");
@@ -150,15 +145,31 @@ function createPage() {
             $(row).addClass("odd"); //add odd class
         }
         var kidName = document.createElement("td"); //make table column for kid name
-        $(kidName).addClass("n").text(kiddo.n); //add attrs
+        if(kiddo.isRoyal) { //if royal
+            $(kidName).attr("id", kid + "Name").addClass("n").text(kiddo.n + "*"); //add attrs
+        }
+        else {
+            $(kidName).attr("id", kid + "Name").addClass("n").text(kiddo.n); //add attrs
+        }
         var fp = document.createElement("td"); //make td for first parent name
-        $(fp).addClass("n").text(kiddo.firstParent.n); //add attrs
+        if(kiddo.firstParent.isRoyal) {
+            $(fp).addClass("n").text(kiddo.firstParent.n + "*"); //add attrs
+        }
+        else {
+            $(fp).addClass("n").text(kiddo.firstParent.n); //add attrs
+        }
         var secParCol = document.createElement("td"); //make td for second parent select
         var secParSelect = document.createElement("select"); //make second parent select
         $(secParSelect).attr("id", kid + "SecPar").attr("data-unit", kiddo.n).addClass("sp"); //add attrs
         $(secParCol).append(secParSelect); //append to second parent select td
-        var rs = document.createElement("td"); //make td for rs
-        $(rs).attr("id", kid + "RS").addClass("rs").text("IDK"); //add attr
+        var apl = document.createElement("td"); //make td for apl select
+        var aplSelect = document.createElement("select"); //make apl select
+        $(aplSelect).attr("id", kid + "Apl").attr("data-unit", kiddo.n).addClass("apl");
+        $(apl).append(aplSelect);
+        var spl = document.createElement("td"); //make td for spl select
+        var splSelect = document.createElement("select"); //make spl select
+        $(splSelect).attr("id", kid + "Spl").attr("data-unit", kiddo.n).addClass("spl");
+        $(spl).append(splSelect);
         var cl = document.createElement("td"); //make td for class select
         var clSelect = document.createElement("select"); //make class select
         $(clSelect).attr("id", kid + "Class").attr("data-unit", kiddo.n).addClass("clK"); //add attrs
@@ -167,7 +178,7 @@ function createPage() {
         var typeSelect = document.createElement("select"); //make type select
         $(typeSelect).attr("id", kid + "Type").attr("data-unit", kiddo.n).addClass("typeK"); //add attrs
         $(type).append(typeSelect); //append to type td
-        $(row).append(kidName).append(fp).append(secParCol).append(rs).append(cl).append(type); //append tds to tr
+        $(row).append(kidName).append(fp).append(secParCol).append(apl).append(spl).append(cl).append(type); //append tds to tr
         for(var j = 0; j < statArr.length; j++) { //for each stat
             var statCol = document.createElement("td"); //create td for stat display
             $(statCol).attr("id", kid + statArr[j]).addClass("sv"); //add attrs
@@ -245,120 +256,6 @@ function fillKid(kid) {
         updateMod(statArr[i], j, kid); //update mod
     }
 }
-/* accepts a kid object and updates kids' class options */
-function updateClass(unit) {
-    var v = unit.vName;
-    $("#" + v + "Class").empty(); //remove class option tags
-    var clOpts = []; //keep track of unpromoted class options
-    var bc = unit.baseClass[0];
-    //pushing base class and promotes...
-    for(var i = 0; i < unit.baseClass.length; i++) { //for each base class
-        var cc = unit.baseClass[i]; //current class
-        var ccO = getClO(cc); //current class object
-        if(ccO != noClass) {
-            clOpts.push(cc);
-            for(var j = 0; j < ccO.promotesTo.length; j++) { //for each promoted class
-                if($.inArray(getSexedClass(ccO.promotesTo[j], unit)) == -1) { //if sexed class is not in array
-                    clOpts.push(getSexedClass(ccO.promotesTo[j], unit));
-                }
-            }
-        }
-    }
-    if(unit.isChild) {
-        var x = "";
-        var fp = unit.firstParent;
-        var sp = getSecPar(v);
-        var fromF = getSexedClass(fp.baseClass[0], unit);
-        var fromS = getSexedClass(sp.baseClass[0], unit);
-        //determining inheritance from first parent...
-        if(fromF == "Songstress") { //if fp is azura
-            fromF = "Troubadour"; //shiggy gets troubadour
-        }
-        else if(fromF == bc && fp.baseClass.length != 1) { //if same class
-            fromF = fp.baseClass[1]; //set to fp's second class
-        }
-        if(fromF != "-") {
-            x = getSexedClass(fromF, unit);
-            if($.inArray(x, clOpts) == -1) { //if fromF is not kid's base class
-                clOpts.push(x);
-            }
-            x = getSexedClass(getClO(fromF).promotesTo[0], unit);
-            if($.inArray(x, clOpts) == -1) { //if first promotion not in clOpts
-                clOpts.push(x);
-            }
-            if(getClO(fromF).promotesTo.length != 1) { //if not a fuzzywuzzy
-                x = getSexedClass(getClO(fromF).promotesTo[1], unit);
-                if($.inArray(x, clOpts) == -1) { //if second promotion not in clOpts
-                    clOpts.push(x); //if it turns out that there is a way to make a option tag's value a defined object and I don't actually have to keep switching between the string names and the object itself, I'm going to flip a serious shit
-                }
-            }
-        }
-        else {
-        }
-        //determining second parent inheritance...
-        if(fromS != "-") { //if sp has been selected
-            if(fromS == "Songstress") { //if sp is azura
-                fromS = sp.baseClass[1]; //give sky knight
-                if(fromS == bc || fromS == fromF) { //if already has sky knight
-                    fromS = getClO(fromS).llCl; //get troubadour
-                }
-            }
-            else if(bc == fromS && sp.baseClass.length != 1) { //if same class and sp is not talentless (lol) corrin
-                fromS = sp.baseClass[1]; //get second parent's second class
-                if(fromS == fromF) { //if already has class
-                    fromS = getClO(sp.baseClass[0]).llCl; //get parallel class
-                }
-            }
-            if(fromS == fromF && sp.baseClass.length != 1 && fromS == sp.baseClass[0]) {//if same class, sp is not azura or talentless corrin, and fromS is second parent's first class option
-                fromS = sp.baseClass[1] //get second parent's second class
-            }
-            if((fromS == bc && fromS == sp.baseClass[1])) { //if same class and fromS is second parent's second class
-                fromS == sp.baseClass[0].llCl; //get parallel class
-            }
-            for(var i = 0; i < clOpts.length; i++) { //for each class option
-                clOpts[i] = "" + clOpts[i]; //ensure string
-            }
-            if(fromS != "-") { //if class is being passed
-                if($.inArray(fromS, clOpts) == -1) { //if not in array
-                    clOpts.push(getSexedClass(fromS, unit));
-                }
-                if(sp.n != "Mozu") { //no promotes on villager
-                    x = getSexedClass(getClO(fromS).promotesTo[0], unit);
-                    if($.inArray(x, clOpts) == -1) { //if not in array
-                        clOpts.push(x);
-                    }
-                    if(getClO(fromS).promotesTo.length != 1) {//if not a fuzzywuzzy
-                        x = getSexedClass(getClO(fromS).promotesTo[1], unit);
-                        if($.inArray(x, clOpts) == -1) { //if not in array
-                            clOpts.push(x);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if(unit.sex == "F") { //if female
-        for(var i = 0; i < otherClsF.length; i++) { //for every female bonus class
-            clOpts.push(otherClsF[i].n);
-        }
-    }
-    else { //if male
-        for(var i = 0; i < otherClsM.length; i++) { //for every male bonus class
-            clOpts.push(otherClsM[i].n)
-        }
-    }
-    for(var i = 0; i < clOpts.length; i ++) { //for each class option
-        var opt = document.createElement("option"); //make option
-        $(opt).val(clOpts[i]).text(clOpts[i]); //add attr
-        $("#" + v + "Class").append(opt); //append to class select
-    }
-    if(unit.isChild) {
-        updateView(unit);
-    }
-    else {
-        updateViewF(unit);
-    }
-}
 /* accepts a class string and a unit object and returns the class string that corresponds to the kid's sex */
 function getSexedClass(cl, unit) {
     if(cl == "Shrine Maiden" && unit.sex == "M") {
@@ -390,12 +287,15 @@ function getSexedClass(cl, unit) {
 /* accepts a kid string and returns the selected second parent's object */
 function getSecPar(v) {
     var secPar = $("#" + v + "SecPar").val(); //gets second parent's string name
-    for(var i = 0; i < allParents.length; i++) { //for each parent
-        if(allParents[i].n == secPar) { //if parent object found
-            return allParents[i]; //return parent object
-        }
-    }
-    return noPar; //return noPar object
+    return getUnitO(secPar);
+}
+function getApl(v) {
+    var apl = $("#" + v + "Apl").val();
+    return getUnitO(apl);
+}
+function getSpl(v) {
+    var spl = $("#" + v + "Spl").val();
+    return getUnitO(spl);
 }
 /* accepts a unit string and returns the selected class object */
 function getCl(v) { 
@@ -415,6 +315,15 @@ function getClO(str) {
         }
     }
     return noClass; //yep
+}
+/* takes a unit name string and returns the unit object */
+function getUnitO(str) {
+    for(var i = 0; i < allUnits.length; i++) { //for every unit
+        if(allUnits[i].n == str) { //if unit object found
+            return allUnits[i]; //return unit object
+        }
+    }
+    return noPar;
 }
 /* returns selected boon object */
 function getBoon() {
@@ -483,16 +392,18 @@ function updateInnerChild(kid) {
 /* accepts a kid object and updates the information displayed */
 function updateView(kid) {
     var v = kid.vName
-    if(kid.isRoyal) { //if royal
-        $("#" + v + "RS").empty().text("Yes"); //yep
-    }
-    else { //if not
-        $("#" + v + "RS").empty().text("No"); //peasant!
-    }
     var modArr = getModArr(kid);
     var baseGRArr = getGRBaseArr(kid);
     var grArr = getGRArrU(kid);
+    var grArrC = getGRArrC(getCl(v));
     var maxClArr = getMaxStatArr(getCl(v));
+    $("#" + v + "Name").empty();
+    if(kid.isRoyal) { //if royal
+        $("#" + v + "Name").text(kid.n + "*");
+    }
+    else {
+        $("#" + v + "Name").text(kid.n);
+    }
     for(var i = 0; i < statArr.length; i++) { //for each stat
         var j; //initialize j-- mod, gr, or max stat value
         if($("#" + v + "Type").val() == "mods") {//if mods selected
@@ -502,7 +413,7 @@ function updateView(kid) {
             j = baseGRArr[i];
         }
         else if($("#" + v + "Type").val() == "grs") {//if grs selected
-            j = grArr[i]; //set to gr
+            j = grArr[i] + grArrC[i]; //set to gr
         }
         else { //if max stats selected
             if(i == 0) { //if i is 0
@@ -528,32 +439,28 @@ function updateTalent() {
     if(corrinF.baseClass.length != 1) { //if had talent assigned
         corrinF.baseClass.pop();
         corrinM.baseClass.pop();
+        kanaF.baseClass.pop();
+        kanaM.baseClass.pop();
     }
     if(ct != noClass) { //if talent selected
         var fct = getSexedClass(ct, kanaF);
         var mct = getSexedClass(ct, kanaM);
         corrinF.baseClass.push(fct);
         corrinM.baseClass.push(mct);
-        updateClass(corrinF);
-        updateClass(corrinM);
-        updateViewF(corrinF);
-        updateViewF(corrinM);
+        kanaF.baseClass.push(fct);
+        kanaM.baseClass.push(mct);
+        clDir("sp", kanaF);
+        clDir("sp", kanaM);
+        updateView(kanaF);
+        updateView(kanaM);
     }
-    var corrinsKids = [kanaF, kanaM]; //tracks corrin's kids, kanas added automatically
-    $.each($(".sp"), function() { //for each second parent select
-        for(var i = 0; i < allKiddies.length; i++) { //for each kid
-            if($(this).attr("unit") == allKiddies[i].n) { //if kid matches
-                corrinsKids.push(allKiddies[i]);
-            }
+    $(".spl").each(function() {
+        var u = $(this).val();
+        if(u == corrinF.n || u == corrinM.n) {
+            var unit = getUnitO($(this).data("unit"));
+            clDir("spl", unit);
         }
     });
-    for(var i = 0; i < corrinsKids.length; i++) { //for each of corrin's kids
-        if(i <= 1) { //if kanas
-            updateClass(corrinsKids[i]);
-        }
-        updateInnerChild(corrinsKids[i]);
-        updateView(corrinsKids[i]);
-    }
 }
 /* accepts mod string, int val, and unit object and updates the unit's mod to val */
 function updateMod(mod, val, unit) {
@@ -620,16 +527,21 @@ function createFG() {
             $(row).addClass("odd"); //add odd class
         }
         var fgName = document.createElement("td"); //make td to display name
-        $(fgName).addClass("n").text(unit.n); //assign props
-        var rs = document.createElement("td"); //make td to display royal status
-        $(rs).attr("id", unitV + "RS").addClass("rs"); //assign props
-        if(unit.isRoyal) { //if royal
-            $(rs).text("Yes");
+        if(unit.isRoyal) {
+            $(fgName).addClass("n").text(unit.n + "*"); //assign props
         }
-        else { //if not
-            $(rs).text("No");
+        else {
+            $(fgName).addClass("n").text(unit.n); //assign props
         }
-        var cl = document.createElement("td");  //make td for class select
+        var apl = document.createElement("td"); //make td for apl select
+        var aplSelect = document.createElement("select"); //make apl select
+        $(aplSelect).attr("id", unitV + "Apl").attr("data-unit", unit.n).addClass("apl");
+        $(apl).append(aplSelect);
+        var spl = document.createElement("td"); //make td for spl select
+        var splSelect = document.createElement("select"); //make spl select
+        $(splSelect).attr("id", unitV + "Spl").attr("data-unit", unit.n).addClass("spl");
+        $(spl).append(splSelect);
+        var cl = document.createElement("td"); //make td for class select
         var clSelect = document.createElement("select"); //make class select for fg
         $(clSelect).attr("id", unitV + "Class").attr("data-unit", unit.n).addClass("clF"); //assign props
         $(cl).append(clSelect); //append to td
@@ -637,40 +549,13 @@ function createFG() {
         var typeSelect = document.createElement("select"); //make display select
         $(typeSelect).attr("id", unitV + "Type").attr("data-unit", unit.n).addClass("typeF"); //assign props
         $(type).append(typeSelect); //append to td
-        $(row).append(fgName).append(rs).append(cl).append(type); //append to row
+        $(row).append(fgName).append(apl).append(spl).append(cl).append(type); //append to row
         for(var j = 0; j < statArr.length; j++) { //for each stat
             var statCol = document.createElement("td"); //create td for stat display
             $(statCol).attr("id", unitV + statArr[j]).addClass("sv"); //add attrs
             $(row).append(statCol); //append to row
         }
         $("#firstGen").append(row); //append to table
-    }
-}
-/* fills the class selects for the fg units */
-function fillFGClasses() {
-    for(var i = 0; i < allFG.length; i++) { //for each first gen unit
-        var unit = allFG[i];
-        var unitV = unit.vName;
-        var bc = unit.baseClass;
-        var bcl = bc.length;
-        var clOpts = []; //keep track of available unpromoted classes
-        var select = $("#" + unitV + "Class");
-        for(var j = 0; j < bc.length; j++) { //for each base class
-            var bcj = getClO(bc[j]);
-            if(bcj != noClass) {//if not talentless avatar
-                clOpts.push(bcj.n);
-                    for(var k = 0; k < bcj.promotesTo.length; k++) { //for each promote
-                        if($.inArray(getSexedClass(bcj.promotesTo[k].n, unit), clOpts) == -1) { //if not in array
-                            clOpts.push(getSexedClass(bcj.promotesTo[k], unit));
-                        }
-                    }
-            }
-        }
-        for(var j = 0; j < clOpts.length; j++) { //for each class option
-            var opt = document.createElement("option"); //make option tag
-            $(opt).attr("value", clOpts[j]).text(clOpts[j]); //assign props
-            $(select).append(opt); //append to select
-        }
     }
 }
 /* update displayed information of fg unit */
@@ -699,5 +584,173 @@ function updateViewF(unit) {
             }
         }
         $("#" + unit.vName + statArr[i]).empty().append(j); //update display
+    }
+}
+/* accepts a unit object and sets up the classes that are available by default */
+function setUpClass(unit) {
+    //setting up variables...
+    var v = unit.vName;
+    var bc = unit.baseClass;
+    var clOpts = [];
+    var sel = $("#" + v + "Class");
+    $(sel).empty(); //empty select
+    for(var i = 0; i < bc.length; i++) { //for each base class
+        if(bc[i] != "-") { //if legit class
+            clOpts.push(bc[i]);
+            for(var j = 0; j < getClO(bc[i]).promotesTo.length; j++) { //for each of the current base class' promotions
+                if($.inArray(getSexedClass(getClO(bc[i]).promotesTo[j], unit), clOpts) == -1) { //if new class
+                    clOpts.push(getSexedClass(getClO(bc[i]).promotesTo[j], unit));
+                }
+            }
+        }
+    }
+    //adding the options to the select
+    for(var i = 0; i < clOpts.length; i++) { //for each option
+        var opt = document.createElement("option");
+        $(opt).val(clOpts[i]).text(clOpts[i]);
+        $(sel).append(opt);
+    }
+}
+function newCl(rel, ou, unit, clOpts) {
+    if(ou == noPar) {
+        return clOpts;
+    }
+    var obc = ou.baseClass;
+    var oc = getSexedClass(obc[0], unit);
+    //if other unit is corrin of fuzzy and not parent child rel
+    if((ou == corrinF || ou == corrinM || ou == keaton || ou == velouria || ou == kaden || ou == selkie || ou == mozu) && rel == "np") {
+        if(obc.length > 1) {
+            oc = obc[1];
+            if($.inArray(oc, clOpts) != -1) {
+                oc = getClO(obc[1]).llCl;
+            }
+        }
+        else {
+            return clOpts;
+        }
+    }
+    else if(oc == "Songstress") { //if other unit is azura
+        oc = "Sky Knight";
+        if($.inArray(oc, clOpts) != -1) { //if unit has sky knight
+            oc = "Troubadour";
+        }
+    }
+    else { //if second parent is not azura
+        if($.inArray(oc, clOpts) != -1) { //if unit has class
+            if(obc.length > 1) { //if second parent has more than one base class
+                oc = getSexedClass(obc[1], unit); //get second parent's second class
+            }
+            if($.inArray(oc, clOpts) != -1) { //if unit has class
+                oc = getSexedClass(getClO(obc[0]).llCl, unit); //get parallel class
+            }
+        }
+    }
+    if($.inArray(oc, clOpts) == -1) { // if not in array
+        clOpts.push(oc)
+    }
+    return clOpts;
+}
+/* accepts string and unit object and determines order of adding classes */
+function clDir(x, unit) {
+    if(unit == corrinF || unit == corrinM) { //if corrin
+        return;
+    }
+    var clOpts = unit.baseClass.slice(0);
+    var apl = getApl(unit.vName);
+    var spl = getSpl(unit.vName);
+    if(x == "sp") { //if sp changed
+        clOpts = newCl("p", getSecPar(unit.vName), unit, clOpts);
+        if(unit.lr == "apl") { //if a rank was last chosen
+            clOpts = newCl("np", spl, unit, clOpts);
+            clOpts = newCl("np", apl, unit, clOpts);
+        }
+        else {
+            clOpts = newCl("np", apl, unit, clOpts);
+            clOpts = newCl("np", spl, unit, clOpts);
+        }
+    }
+    if(x == "apl") { //if a rank changed
+        if(unit.isChild) { //if child
+            unit.lr = "apl";
+            clOpts = newCl("p", getSecPar(unit.vName), unit, clOpts);
+        }
+        clOpts = newCl("np", spl, unit, clOpts);
+        clOpts = newCl("np", apl, unit, clOpts);
+    }
+    if(x == "spl") { //if s rank changed
+        if(unit.isChild) { //if child
+            unit.lr = "spl";
+            clOpts = newCl("p", getSecPar(unit.vName), unit, clOpts);
+        }
+        clOpts = newCl("np", apl, unit, clOpts);
+        clOpts = newCl("np", spl, unit, clOpts);
+    }
+    addClOpts(clOpts, unit);
+    if(unit.isChild) {
+        updateView(unit);
+    }
+    else {
+        updateViewF(unit);
+    }
+}
+/* accepts an array of strings and a unit object and fills up the class select */
+function addClOpts(clOpts, unit) {
+    var fullClOpts = [];
+    var sel = $("#" + unit.vName + "Class");
+    $(sel).empty();
+    for(var i = 0; i < clOpts.length; i++) {
+        if(clOpts[i] != "-") {
+            fullClOpts.push(getSexedClass(clOpts[i], unit));
+            for(var j = 0; j < getClO(clOpts[i]).promotesTo.length; j++) {
+                if($.inArray(getSexedClass(getClO(clOpts[i]).promotesTo[j], unit), fullClOpts) == -1) {
+                    fullClOpts.push(getSexedClass(getClO(clOpts[i]).promotesTo[j], unit));
+                }
+            }
+        }
+    }
+    for(var i = 0; i < fullClOpts.length; i++) {
+        var opt = document.createElement("option");
+        $(opt).val(fullClOpts[i]).text(fullClOpts[i]);
+        $(sel).append(opt);
+    }
+        var sel = $("#" + unit.vName + "Class");
+    if(unit.sex == "F") { //if lady
+        for(var i = 0; i < otherClsF.length; i++) {
+            var opt = document.createElement("option");
+            $(opt).val(otherClsF[i].n).text(otherClsF[i].n);
+            $(sel).append(opt);
+        }
+    }
+    else { //if gent
+    for(var i = 0; i < otherClsM.length; i++) {
+            var opt = document.createElement("option");
+            $(opt).val(otherClsM[i].n).text(otherClsM[i].n);
+            $(sel).append(opt);
+        }
+    }
+}
+/* accepts corrin object and fills in all classes */
+function fillCorrinClass(unit) {
+    var sel = $("#" + unit.vName + "Class");
+    if(unit == corrinF) {
+        for(var i = 0; i < allClCorF.length; i++) {
+            var opt = document.createElement("option");
+            $(opt).val(allClCorF[i].n).text(allClCorF[i].n);
+            $(sel).append(opt);
+        }
+    }
+    else {
+        for(var i = 0; i < allClCorM.length; i++) {
+            var opt = document.createElement("option");
+            $(opt).val(allClCorM[i].n).text(allClCorM[i].n);
+            $(sel).append(opt);
+        }
+    }
+    if(unit.isChild) {
+        updateInnerChild(unit);
+        updateView(unit);
+    }
+    else {
+        updateViewF(unit);
     }
 }

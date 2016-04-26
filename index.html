@@ -14,7 +14,7 @@
         <div id="info">
             soapy made this.
             <br>
-            version: "I think it works!"
+            now with spouses & BFFs!
         </div>
         <h3>Fire Emblem Fates Calculator</h3>
         <div id="content">
@@ -76,35 +76,52 @@
             <div id="fg">
                 <button type="button" id="toggleFG">-</button>
                 <span id="fgShowHide">Hide</span> First Generation Units
-                <table id="firstGen" class="lpad">
-                    <tr>
-                        <td>Unit</td>
-                        <td>Royalty?</td>
-                        <td>Class</td>
-                        <td>Displaying</td>
-                        <td class="sv">HP</td>
-                        <td class="sv">Str</td>
-                        <td class="sv">Mag</td>
-                        <td class="sv">Skl</td>
-                        <td class="sv">Spd</td>
-                        <td class="sv">Lck</td>
-                        <td class="sv">Def</td>
-                        <td class="sv">Res</td>
-                    </tr>
-                </table>
+                <div id="ffs" class ="lpad">
+                    <span class="fyi">- Classes from A+ and S Ranks will be inherited in the order they are chosen.</span><br>
+                    <span class="fyi">- Royal units' names are followed by an asterisk.</span></br>
+                    <span class="fyi">- Corrin can use a Partner Seal to inherit a class from any unit with whom (s)he has achieved A rank.</span><br>
+                    <span class="fyi">- Nohr Prince(ss), Wolfskin, Kitsune, Songstress, and Villager cannot be inherited through Partner or Friendship Seals.</span><br>
+                    <span class="fyi">- Same-sex pairings do not result in children.</span><br>
+                    <span class="fyi">- If unit has the Aptitude skill equipped, each stat's effective growth rate is increased by 10.</span>
+                    <table id="firstGen">
+                        <tr>
+                            <td>Unit</td>
+                            <td>A+ Rank</td>
+                            <td>S Rank</td>
+                            <td>Class</td>
+                            <td>Displaying</td>
+                            <td class="sv">HP</td>
+                            <td class="sv">Str</td>
+                            <td class="sv">Mag</td>
+                            <td class="sv">Skl</td>
+                            <td class="sv">Spd</td>
+                            <td class="sv">Lck</td>
+                            <td class="sv">Def</td>
+                            <td class="sv">Res</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <br>
             <div id="kids">
                 <button type="button" id="toggleK">-</button>
                 <span id="kidsShowHide">Hide</span> Child Units
                 <div id="kds" class="lpad">
-                    <span id="fyi">Mods shown when no second parent is selected assume the second parent will NOT be a child.</span>
+                    <span class="fyi">- Mods shown when no second parent is selected assume the second parent will not be a child.</span><br>
+                    <span class="fyi">- Classes from the second parent are always inherited first.</span><br>
+                    <span class="fyi">- Classes from A+ and S Ranks will be inherited in the order they are chosen.</span><br>
+                    <span class="fyi">- Royal units' names are followed by an asterisk.</span><br>
+                    <span class="fyi">- Though the option will still be provided here, sibling units cannot S rank with each other.</span><br>
+                    <span class="fyi">- Nohr Prince(ss), Wolfskin, Kitsune, and Villager can only be inherited from a parent.</span><br>
+                    <span class="fyi">- Songstress cannot be inherited under any circumstances.</span><br>
+                    <span class="fyi">- If unit has the Aptitude skill equipped, each stat's effective growth rate is increased by 10.</span>
                     <table id="kiddies">
                         <tr>
                             <td>Child</td>
                             <td>First Parent</td>
                             <td>Second Parent</td>
-                            <td>Royalty?</td>
+                            <td>A+ Rank</td>
+                            <td>S Rank</td>
                             <td>Class</td>
                             <td>Displaying</td>
                             <td class="sv">HP</td>
