@@ -14,7 +14,9 @@ var hpBoon = {
     spdGR: 0,
     lckGR: 0,
     defGR: 5,
-    resGR: 5
+    resGR: 5,
+    cpb: [0, 0, 0, 0, 0, 0, 1],
+    spb: [0, 0, 0, 0, 0, 1, 1],
 }
 var hpBane = {
     txtVal: "Sickly (HP)",
@@ -50,7 +52,9 @@ var strBoon = {
     spdGR: 0,
     lckGR: 0,
     defGR: 5,
-    resGR: 0
+    resGR: 0,
+    cpb: [0, 0, 1, 0, 0, 0, 0],
+    spb: [1, 0, 0, 0, 0, 0, 1]
 }
 var strBane = {
     txtVal: "Weak (Str)",
@@ -86,7 +90,9 @@ var magBoon = {
     spdGR: 5,
     lckGR: 0,
     defGR: 0,
-    resGR: 5
+    resGR: 5,
+    cpb: [0, 0, 0, 1, 0, 0, 0],
+    spb: [0, 1, 0, 0, 0, 0, 1],
 }
 var magBane = {
     txtVal: "Dull (Mag)",
@@ -122,7 +128,9 @@ var sklBoon = {
     spdGR: 0,
     lckGR: 0,
     defGR: 5,
-    resGR: 0
+    resGR: 0,
+    cpb: [0, 0, 0, 0, 0, 1, 0],
+    spb: [0, 0, 1, 0, 0, 0, 1]
 }
 var sklBane = {
     txtVal: "Clumsy (Skl)",
@@ -158,7 +166,9 @@ var spdBoon = {
     spdGR: 15,
     lckGR: 5,
     defGR: 0,
-    resGR: 0
+    resGR: 0,
+    cpb: [0, 0, 0, 0, 1, 0, 0],
+    spb: [0, 0, 0, 1, 0, 0, 1]
 }
 var spdBane = {
     txtVal: "Slow (Spd)",
@@ -194,7 +204,9 @@ var lckBoon = {
     spdGR: 0,
     lckGR: 25,
     defGR: 0,
-    resGR: 0
+    resGR: 0,
+    cpb: [1, 0, 0, 0, 0, 0, 0],
+    spb: [0, 0, 0, 0, 1, 0, 1]
 }
 var lckBane = {
     txtVal: "Unlucky (Lck)",
@@ -230,7 +242,9 @@ var defBoon = {
     spdGR: 0,
     lckGR: 5,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    cpb: [0, 0, 0, 0, 0, 0, 1],
+    spb: [0, 0, 0, 0, 0, 1, 1]
 }
 var defBane = {
     txtVal: "Fragile (Def)",
@@ -266,7 +280,9 @@ var resBoon = {
     spdGR: 5,
     lckGR: 0,
     defGR: 0,
-    resGR: 10
+    resGR: 10,
+    cpb: [0, 1, 0, 0, 0, 0, 0],
+    spb: [0, 0, 0, 0, 0, 0, 2]
 }
 var resBane = {
     txtVal: "Excitable (Res)",
@@ -302,7 +318,9 @@ var noBB = {
     spdGR: 0,
     lckGR: 0,
     defGR: 0,
-    resGR: 0
+    resGR: 0,
+    cpb: [0, 0, 0, 0, 0, 0, 0],
+    spb: [0, 0, 0, 0, 0, 0, 1]
 }
 var boonArr = [noBB, hpBoon, strBoon, magBoon, sklBoon, spdBoon, lckBoon, defBoon, resBoon];
 var baneArr = [noBB, hpBane, strBane, magBane, sklBane, spdBane, lckBane, defBane, resBane];
