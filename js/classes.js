@@ -593,7 +593,7 @@ var hoshidoNoble = {
 var samurai = {
     n: "Samurai",
     talentN: "Samurai",
-    promotesTo: ["Swordmaster", "Master Of Arms"],
+    promotesTo: ["Swordmaster", "Master of Arms"],
     llCl: "Mercenary",
     maxHP: 40,
     maxStr: 20,
