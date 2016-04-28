@@ -22,6 +22,7 @@ function gogogo() {
         $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
         $(this).append($("<option></option>").val("grs").text("Effective Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
+        $(this).append($("<option></option>").val("pb").text("Max Pair Up Bonuses"));
         $(this).change(function() { //assign event handler
             updateInnerChild(kid);
             updateView(kid)
@@ -34,6 +35,7 @@ function gogogo() {
         $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
         $(this).append($("<option></option>").val("grs").text("Effective Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
+        $(this).append($("<option></option>").val("pb").text("Max Pair Up Bonuses"));
         $(this).change(function() { //assign event handler
             updateViewF(unit);
         });
@@ -224,6 +226,10 @@ function updateBoonBane() {
             updateMod(statArr[i], boModArr[i] + baModArr[i], corrinM);
         }
     }
+    corrinF.cpb = getBoon().cpb.slice(0);
+    corrinF.spb = getBoon().spb.slice(0);
+    corrinM.cpb = getBoon().cpb.slice(0);
+    corrinM.spb = getBoon().spb.slice(0);
     /* fills the bb table with corrin's current info and modifies all their kids */
     fillBBTable(); //display mod and gr info
     updateViewF(corrinF);
@@ -361,6 +367,7 @@ function updateInnerChild(kid) {
     var cGR = getGRArrC(getCl(v));
     var boGR = getBoonGRArr(getBoon());
     var baGR = getBaneGRArr(getBane());
+    //calculating mods...
     for(var i = 1; i < statArr.length; i++) { //for each stat
         var j = fMods[i] + sMods[i]; //sum of parents' mods
         if(!secPar.isChild) { //if second parent isn't a child
@@ -368,6 +375,7 @@ function updateInnerChild(kid) {
         }
         updateMod(statArr[i], j, kid); //update kid's stat mod
     }
+    //calculating growth rates...
     for(var i = 0; i < statArr.length; i++) { //for each stat
         var j; //initialize j-- kid's grs
         if(secPar != noPar) { //if second parent is selected
@@ -388,15 +396,29 @@ function updateInnerChild(kid) {
         }
         updateGR(statArr[i], j, kid);
     }
+    //assigning pair up bonuses...
+    if(firstPar.sex == "M") { //if first parent is father
+        kid.cpb = firstPar.cpb.slice(0);
+        kid.bpb = secPar.bpb.slice(0);
+        kid.apb = firstPar.apb.slice(0);
+        kid.spb = secPar.spb.slice(0);
+    }
+    else { //else
+        kid.cpb = secPar.cpb.slice(0);
+        kid.bpb = firstPar.bpb.slice(0);
+        kid.apb = secPar.apb.slice(0);
+        kid.spb = firstPar.spb.slice(0);
+    }
 }
 /* accepts a kid object and updates the information displayed */
 function updateView(kid) {
     var v = kid.vName
+    var cl = getCl(v);
     var modArr = getModArr(kid);
     var baseGRArr = getGRBaseArr(kid);
     var grArr = getGRArrU(kid);
-    var grArrC = getGRArrC(getCl(v));
-    var maxClArr = getMaxStatArr(getCl(v));
+    var grArrC = getGRArrC(cl);
+    var maxClArr = getMaxStatArr(cl);
     $("#" + v + "Name").empty();
     if(kid.isRoyal) { //if royal
         $("#" + v + "Name").text(kid.n + "*");
@@ -415,12 +437,20 @@ function updateView(kid) {
         else if($("#" + v + "Type").val() == "grs") {//if grs selected
             j = grArr[i] + grArrC[i]; //set to gr
         }
-        else { //if max stats selected
+        else if($("#" + v + "Type").val() == "max") { //if max stats selected
             if(i == 0) { //if i is 0
                 j = maxClArr[i]; //set to max stat
             }
             else { //if not
                 j = maxClArr[i] + modArr[i]; //set to max stat + mod
+            }
+        }
+        else { //if pair up bonuses selected
+            if(i == 0) {
+                j = "-";
+            }
+            else {
+                j = kid.cpb[i - 1] + kid.bpb[i - 1] + kid.apb[i - 1] + kid.spb[i - 1] + cl.pb[i - 1];
             }
         }
         $("#" + v + statArr[i]).empty().append(j); //update display
@@ -560,22 +590,24 @@ function createFG() {
 }
 /* update displayed information of fg unit */
 function updateViewF(unit) {
+    var v = unit.vName;
+    var cl = getCl(v);
     var modArrU = getModArr(unit);
     var grArrU = getGRArrU(unit);
-    var grArrC = getGRArrC(getCl(unit.vName));
-    var maxStatArr = getMaxStatArr(getCl(unit.vName));
+    var grArrC = getGRArrC(cl);
+    var maxStatArr = getMaxStatArr(cl);
     for(var i = 0; i < statArr.length; i++) { //for each stat
         var j;
-        if($("#" + unit.vName + "Type").val() == "mods") { //mods selected
+        if($("#" + v + "Type").val() == "mods") { //mods selected
             j = modArrU[i];
         }
-        else if($("#" + unit.vName + "Type").val() == "bases") {
+        else if($("#" + v + "Type").val() == "bases") {
             j = grArrU[i];
         }
-        else if($("#" + unit.vName + "Type").val() == "grs") { //if grs selected
+        else if($("#" + v + "Type").val() == "grs") { //if grs selected
             j = grArrU[i] + grArrC[i];
         }
-        else { //if max stats selected
+        else if($("#" + v + "Type").val() == "max") { //if max stats selected
             if(i == 0) { //if hp
                 j = maxStatArr[i];
             }
@@ -583,7 +615,15 @@ function updateViewF(unit) {
                 j = maxStatArr[i] + modArrU[i];
             }
         }
-        $("#" + unit.vName + statArr[i]).empty().append(j); //update display
+        else {
+            if(i == 0) {
+                j = "-";
+            }
+            else {
+                j = unit.cpb[i - 1] + unit.bpb[i - 1] + unit.apb[i - 1] + unit.spb[i - 1] + cl.pb[i - 1];
+            }
+        }
+        $("#" + v + statArr[i]).empty().append(j); //update display
     }
 }
 /* accepts a unit object and sets up the classes that are available by default */

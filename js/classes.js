@@ -20,6 +20,7 @@ var nohrPrincess = {
     lckGR: 10,
     defGR: 10,
     resGR: 5,
+    pb: [2, 0, 1, 1, 2, 0, 0, 0]
 }
 var nohrPrince = {
     n: "Nohr Prince",
@@ -40,7 +41,8 @@ var nohrPrince = {
     spdGR: 10,
     lckGR: 10,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    pb: [2, 0, 1, 1, 2, 0, 0, 0]
 }
 var nohrNoble = {
     n: "Nohr Noble",
@@ -59,7 +61,8 @@ var nohrNoble = {
     spdGR: 15,
     lckGR: 5,
     defGR: 5,
-    resGR: 15
+    resGR: 15,
+    pb: [2, 2, 1, 1, 0, 0, 2, 0]
 }
 var cavalier = {
     n: "Cavalier",
@@ -81,7 +84,8 @@ var cavalier = {
     spdGR: 10,
     lckGR: 15,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    pb: [2, 0, 0, 0, 0, 2, 2, 0]
 }
 var paladin = {
     n: "Paladin",
@@ -100,7 +104,8 @@ var paladin = {
     spdGR: 10,
     lckGR: 15,
     defGR: 10,
-    resGR: 10
+    resGR: 10,
+    pb: [2, 0, 0, 0, 0, 2, 2, 1]
 }
 var greatKnight = {
     n: "Great Knight",
@@ -119,7 +124,8 @@ var greatKnight = {
     spdGR: 5,
     lckGR: 5,
     defGR: 20,
-    resGR: 0
+    resGR: 0,
+    pb: [2, 0, 0, 0, 0, 4, 0, 1]
 }
 var knight = {
     n: "Knight",
@@ -141,7 +147,8 @@ var knight = {
     spdGR: 5,
     lckGR: 10,
     defGR: 20,
-    resGR: 0
+    resGR: 0,
+    pb: [2, 0, 0, 0, 0, 4, 0, 0]
 }
 var general = {
     n: "General",
@@ -160,7 +167,8 @@ var general = {
     spdGR: 0,
     lckGR: 10,
     defGR: 20,
-    resGR: 5
+    resGR: 5,
+    pb: [3, 0, 0, 0, 0, 5, 0, 0]
 }
 var fighter = {
     n: "Fighter",
@@ -182,7 +190,8 @@ var fighter = {
     spdGR: 15,
     lckGR: 5,
     defGR: 5,
-    resGR: 0
+    resGR: 0,
+    pb: [4, 0, 0, 2, 0, 0, 0, 0]
 }
 var berserker = {
     n: "Berserker",
@@ -201,7 +210,8 @@ var berserker = {
     spdGR: 15,
     lckGR: 0,
     defGR: 0,
-    resGR: 0
+    resGR: 0,
+    pb: [5, 0, 0, 3, 0, 0, 0, 0]
 }
 var mercenary = {
     n: "Mercenary",
@@ -223,7 +233,8 @@ var mercenary = {
     spdGR: 15,
     lckGR: 5,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    pb: [0, 0, 2, 3, 0, 1, 0, 0]
 }
 var hero = {
     n: "Hero",
@@ -242,7 +253,8 @@ var hero = {
     spdGR: 15,
     lckGR: 5,
     defGR: 10,
-    resGR: 0
+    resGR: 0,
+    pb: [0, 0, 3, 3, 0, 2, 0, 0]
 }
 var bowKnight = {
     n: "Bow Knight",
@@ -261,7 +273,8 @@ var bowKnight = {
     spdGR: 15,
     lckGR: 10,
     defGR: 0,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 0, 3, 3, 0, 0, 0, 1]
 }
 var outlaw = {
     n: "Outlaw",
@@ -283,7 +296,8 @@ var outlaw = {
     spdGR: 20,
     lckGR: 0,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 0, 0, 2, 0, 0, 2, 1]
 }
 var adventurer = {
     n: "Adventurer",
@@ -302,7 +316,8 @@ var adventurer = {
     spdGR: 20,
     lckGR: 0,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 0, 0, 4, 0, 0, 2, 1]
 }
 var wyvernRider = {
     n: "Wyvern Rider",
@@ -324,7 +339,8 @@ var wyvernRider = {
     spdGR: 10,
     lckGR: 5,
     defGR: 20,
-    resGR: 0
+    resGR: 0,
+    pb: [3, 0, 0, 0, 0, 3, 0, 0]
 }
 var wyvernLord = {
     n: "Wyvern Lord",
@@ -343,7 +359,8 @@ var wyvernLord = {
     spdGR: 10,
     lckGR: 5,
     defGR: 20,
-    resGR: 0
+    resGR: 0,
+    pb: [3, 0, 0, 0, 0, 3, 0, 1]
 }
 var maligKnight = {
     n: "Malig Knight",
@@ -362,7 +379,8 @@ var maligKnight = {
     spdGR: 5,
     lckGR: 0,
     defGR: 10,
-    resGR: 15
+    resGR: 15,
+    pb: [0, 2, 0, 0, 0, 2, 2, 1]
 }
 var darkMage = {
     n: "Dark Mage",
@@ -384,7 +402,8 @@ var darkMage = {
     spdGR: 10,
     lckGR: 0,
     defGR: 5,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 3, 0, 0, 0, 0, 3, 0]
 }
 var sorcerer = {
     n: "Sorcerer",
@@ -403,7 +422,8 @@ var sorcerer = {
     spdGR: 10,
     lckGR: 0,
     defGR: 5,
-    resGR: 15
+    resGR: 15,
+    pb: [0, 5, 0, 0, 0, 0, 3, 0]
 }
 var darkKnight = {
     n: "Dark Knight",
@@ -422,7 +442,8 @@ var darkKnight = {
     spdGR: 5,
     lckGR: 5,
     defGR: 15,
-    resGR: 5
+    resGR: 5,
+    pb: [0, 3, 0, 0, 0, 3, 0, 1]
 }
 var troubadour = {
     n: "Troubadour",
@@ -444,7 +465,8 @@ var troubadour = {
     spdGR: 10,
     lckGR: 15,
     defGR: 0,
-    resGR: 15
+    resGR: 15,
+    pb: [0, 2, 0, 0, 2, 0, 2, 0]
 }
 var strategist = {
     n: "Strategist",
@@ -463,7 +485,8 @@ var strategist = {
     spdGR: 10,
     lckGR: 20,
     defGR: 0,
-    resGR: 15
+    resGR: 15,
+    pb: [0, 2, 0, 0, 2, 0, 2, 1]
 }
 var maid = {
     n: "Maid",
@@ -482,7 +505,8 @@ var maid = {
     spdGR: 15,
     lckGR: 10,
     defGR: 5,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 2, 0, 3, 3, 0, 0, 0]
 }
 var butler = {
     n: "Butler",
@@ -501,7 +525,8 @@ var butler = {
     spdGR: 15,
     lckGR: 10,
     defGR: 5,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 2, 0, 3, 3, 0, 0, 0]
 }
 var wolfskin = {
     n: "Wolfskin",
@@ -522,7 +547,8 @@ var wolfskin = {
     spdGR: 15,
     lckGR: 5,
     defGR: 10,
-    resGR: 0
+    resGR: 0,
+    pb: [3, 0, 0, 3, 0, 0, 0, 0]
 }
 var wolfssegner = {
     n: "Wolfssegner",
@@ -541,7 +567,8 @@ var wolfssegner = {
     spdGR: 15,
     lckGR: 5,
     defGR: 10,
-    resGR: 0
+    resGR: 0,
+    pb: [4, 0, 0, 4, 0, 0, 0, 0]
 }
 var hoshidoNoble = {
     n: "Hoshido Noble",
@@ -560,7 +587,8 @@ var hoshidoNoble = {
     spdGR: 10,
     lckGR: 10,
     defGR: 15,
-    resGR: 0
+    resGR: 0,
+    pb: [2, 0, 1, 1, 2, 2, 0, 0]
 }
 var samurai = {
     n: "Samurai",
@@ -582,7 +610,8 @@ var samurai = {
     spdGR: 20,
     lckGR: 15,
     defGR: 0,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 0, 0, 4, 2, 0, 0, 0]
 }
 var swordmaster = {
     n: "Swordmaster",
@@ -601,7 +630,8 @@ var swordmaster = {
     spdGR: 20,
     lckGR: 15,
     defGR: 0,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 0, 0, 5, 3, 0, 0, 0]
 }
 var masterOfArms = {
     n: "Master of Arms",
@@ -620,7 +650,8 @@ var masterOfArms = {
     spdGR: 10,
     lckGR: 10,
     defGR: 10,
-    resGR: 0
+    resGR: 0,
+    pb: [2, 0, 2, 2, 0, 2, 0, 0]
 }
 var oniSavage = {
     n: "Oni Savage",
@@ -642,7 +673,8 @@ var oniSavage = {
     spdGR: 10,
     lckGR: 0,
     defGR: 20,
-    resGR: 0
+    resGR: 0,
+    pb: [4, 0, 0, 0, 0, 2, 0, 0]
 }
 var oniChieftain = {
     n: "Oni Chieftain",
@@ -661,7 +693,8 @@ var oniChieftain = {
     spdGR: 10,
     lckGR: 0,
     defGR: 20,
-    resGR: 5
+    resGR: 5,
+    pb: [4, 0, 0, 0, 0, 2, 0, 0]
 }
 var blacksmith = {
     n: "Blacksmith",
@@ -680,7 +713,8 @@ var blacksmith = {
     spdGR: 10,
     lckGR: 5,
     defGR: 15,
-    resGR: 0
+    resGR: 0,
+    pb: [3, 0, 2, 0, 0, 3, 0, 0]
 }
 var spearFighter = {
     n: "Spear Fighter",
@@ -702,7 +736,8 @@ var spearFighter = {
     spdGR: 15,
     lckGR: 5,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    pb: [2, 0, 2, 2, 0, 0, 0, 0]
 }
 var spearMaster = {
     n: "Spear Master",
@@ -721,7 +756,8 @@ var spearMaster = {
     spdGR: 15,
     lckGR: 5,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    pb: [3, 0, 3, 2, 0, 0, 0, 0]
 }
 var basara = {
     n: "Basara",
@@ -740,7 +776,8 @@ var basara = {
     spdGR: 10,
     lckGR: 15,
     defGR: 5,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 0, 0, 0, 5, 0, 3, 0]
 }
 var diviner = {
     n: "Diviner",
@@ -762,7 +799,8 @@ var diviner = {
     spdGR: 15,
     lckGR: 5,
     defGR: 0,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 3, 0, 3, 0, 0, 0, 0]
 }
 var onmyoji = {
     n: "Onmyoji",
@@ -781,7 +819,8 @@ var onmyoji = {
     spdGR: 15,
     lckGR: 0,
     defGR: 0,
-    resGR: 15
+    resGR: 15,
+    pb: [0, 4, 0, 4, 0, 0, 0, 0]
 }
 var shrineMaiden = {
     n: "Shrine Maiden",
@@ -803,7 +842,8 @@ var shrineMaiden = {
     spdGR: 15,
     lckGR: 15,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 2, 0, 0, 2, 0, 2, 0]
 }
 var monk = {
     n: "Monk",
@@ -825,7 +865,8 @@ var monk = {
     spdGR: 15,
     lckGR: 15,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 2, 0, 0, 2, 0, 2, 0]
 }
 var greatMaster = {
     n: "Great Master",
@@ -844,7 +885,8 @@ var greatMaster = {
     spdGR: 15,
     lckGR: 15,
     defGR: 10,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 3, 0, 0, 2, 0, 3, 0]
 }
 var priestess = {
     n: "Priestess",
@@ -863,7 +905,8 @@ var priestess = {
     spdGR: 15,
     lckGR: 15,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 3, 0, 0, 2, 0, 3, 0]
 }
 var skyKnight = {
     n: "Sky Knight",
@@ -885,7 +928,8 @@ var skyKnight = {
     spdGR: 15,
     lckGR: 20,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 0, 0, 3, 0, 0, 3, 0]
 }
 var falconKnight = {
     n: "Falcon Knight",
@@ -904,7 +948,8 @@ var falconKnight = {
     spdGR: 15,
     lckGR: 20,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 0, 0, 3, 0, 0, 3, 1]
 }
 var kinshiKnight = {
     n: "Kinshi Knight",
@@ -923,7 +968,8 @@ var kinshiKnight = {
     spdGR: 15,
     lckGR: 15,
     defGR: 0,
-    resGR: 15
+    resGR: 15,
+    pb: [0, 0, 2, 2, 2, 0, 0, 1]
 }
 var archer = {
     n: "Archer",
@@ -945,7 +991,8 @@ var archer = {
     spdGR: 15,
     lckGR: 5,
     defGR: 10,
-    resGR: 0
+    resGR: 0,
+    pb: [2, 0, 2, 2, 0, 0, 0, 0]
 }
 var sniper = {
     n: "Sniper",
@@ -964,7 +1011,8 @@ var sniper = {
     spdGR: 15,
     lckGR: 5,
     defGR: 10,
-    resGR: 0
+    resGR: 0,
+    pb: [2, 0, 3, 3, 0, 0, 0, 0]
 }
 var ninja = {
     n: "Ninja",
@@ -986,7 +1034,8 @@ var ninja = {
     spdGR: 20,
     lckGR: 0,
     defGR: 5,
-    resGR: 15
+    resGR: 15,
+    pb: [0, 0, 1, 3, 0, 0, 0, 1]
 }
 var masterNinja = {
     n: "Master Ninja",
@@ -1005,7 +1054,8 @@ var masterNinja = {
     spdGR: 20,
     lckGR: 0,
     defGR: 5,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 0, 2, 4, 0, 0, 0, 1]
 }
 var mechanist = {
     n: "Mechanist",
@@ -1024,7 +1074,8 @@ var mechanist = {
     spdGR: 10,
     lckGR: 5,
     defGR: 5,
-    resGR: 15
+    resGR: 15,
+    pb: [2, 0, 2, 0, 0, 2, 2, 0]
 }
 var apothecary = {
     n: "Apothecary",
@@ -1046,7 +1097,8 @@ var apothecary = {
     spdGR: 10,
     lckGR: 5,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    pb: [3, 0, 0, 0, 0, 2, 1, 0]
 }
 var merchant = {
     n: "Merchant",
@@ -1065,7 +1117,8 @@ var merchant = {
     spdGR: 5,
     lckGR: 15,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    pb: [3, 0, 0, 0, 0, 3, 2, 0]
 }
 var kitsune = {
     n: "Kitsune",
@@ -1086,7 +1139,8 @@ var kitsune = {
     spdGR: 20,
     lckGR: 10,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 0, 0, 4, 2, 0, 0, 0]
 }
 var nineTails = {
     n: "Nine-Tails",
@@ -1105,7 +1159,8 @@ var nineTails = {
     spdGR: 20,
     lckGR: 10,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 0, 0, 5, 3, 0, 0, 0]
 }
 var songstress = {
     n: "Songstress",
@@ -1126,7 +1181,8 @@ var songstress = {
     spdGR: 20,
     lckGR: 20,
     defGR: 0,
-    resGR: 0
+    resGR: 0,
+    pb: [0, 0, 2, 2, 4, 0, 0, 0]
 }
 var villager = {
     n: "Villager",
@@ -1147,7 +1203,8 @@ var villager = {
     spdGR: 10,
     lckGR: 20,
     defGR: 10,
-    resGR: 0
+    resGR: 0,
+    pb: [0, 0, 3, 0, 3, 0, 0, 0]
 }
 var dreadFighter = {
     n: "Dread Fighter",
@@ -1166,7 +1223,8 @@ var dreadFighter = {
     spdGR: 15,
     lckGR: 0,
     defGR: 5,
-    resGR: 20
+    resGR: 20,
+    pb: [2, 0, 0, 2, 0, 0, 4, 0]
 }
 var darkFalcon = {
     n: "Dark Falcon",
@@ -1185,7 +1243,8 @@ var darkFalcon = {
     spdGR: 15,
     lckGR: 15,
     defGR: 0,
-    resGR: 20
+    resGR: 20,
+    pb: [0, 3, 0, 3, 0, 0, 0, 1]
 }
 var ballistician = {
     n: "Ballistician",
@@ -1204,7 +1263,8 @@ var ballistician = {
     spdGR: 0,
     lckGR: 10,
     defGR: 5,
-    resGR: 5
+    resGR: 5,
+    pb: [3, 0, 1, 0, 2, 1, 1, 0]
 }
 var witch = {
     n: "Witch",
@@ -1223,7 +1283,8 @@ var witch = {
     spdGR: 20,
     lckGR: 5,
     defGR: 0,
-    resGR: 10
+    resGR: 10,
+    pb: [0, 5, 0, 3, 0, 0, 0, 0]
 }
 var lodestar = {
     n: "Lodestar",
@@ -1242,7 +1303,8 @@ var lodestar = {
     spdGR: 10,
     lckGR: 25,
     defGR: 5,
-    resGR: 5
+    resGR: 5,
+    pb: [2, 0, 0, 3, 3, 0, 0, 0]
 }
 var vanguard = {
     n: "Vanguard",
@@ -1261,7 +1323,8 @@ var vanguard = {
     spdGR: 5,
     lckGR: 10,
     defGR: 15,
-    resGR: 0
+    resGR: 0,
+    pb: [5, 0, 0, 0, 0, 3, 0, 0]
 }
 var greatLord = {
     n: "Great Lord",
@@ -1280,7 +1343,8 @@ var greatLord = {
     spdGR: 10,
     lckGR: 15,
     defGR: 10,
-    resGR: 5
+    resGR: 5,
+    pb: [0, 0, 0, 4, 4, 0, 0, 0]
 }
 var grandmaster = {
     n: "Grandmaster",
@@ -1299,7 +1363,8 @@ var grandmaster = {
     spdGR: 5,
     lckGR: 0,
     defGR: 5,
-    resGR: 15
+    resGR: 15,
+    pb: [2, 2, 2, 2, 0, 0, 0, 0]
 }
 var noClass = { //lol
     n: "-",
