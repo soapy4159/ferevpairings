@@ -656,10 +656,22 @@ function newCl(rel, ou, unit, clOpts) {
             return clOpts;
         }
     }
-    else if(oc == "Songstress") { //if other unit is azura
-        oc = "Sky Knight";
+    if(rel == "p" && unit.firstParent.sex == "F") { //if fixed parent is female
+        clOpts = [clOpts[0]];
+        if(oc == clOpts[0]) {
+            oc = obc[1];
+        }
+        clOpts.push(oc);
+        obc = unit.firstParent.baseClass;
+        oc = getSexedClass(obc[0], unit);
+    }
+    if(oc == "Songstress") { //if other unit is azura
+        oc = obc[1];
         if($.inArray(oc, clOpts) != -1) { //if unit has sky knight
-            oc = "Troubadour";
+            oc = getClO(obc[0]).llCl;
+            if($.inArray(oc, clOpts) != -1) { //if unit has troubadour
+                oc = getClO(obc[1]).llCl;
+            }
         }
     }
     else { //if second parent is not azura
@@ -667,8 +679,11 @@ function newCl(rel, ou, unit, clOpts) {
             if(obc.length > 1) { //if second parent has more than one base class
                 oc = getSexedClass(obc[1], unit); //get second parent's second class
             }
-            if($.inArray(oc, clOpts) != -1) { //if unit has class
+            if($.inArray(oc, clOpts) != -1 && !(obc[0] == "Nohr Prince" || obc[0] == "Nohr Princess")) { //if unit has class
                 oc = getSexedClass(getClO(obc[0]).llCl, unit); //get parallel class
+            }
+            else if($.inArray(oc, clOpts) != -1 && (obc[0] == "Nohr Prince" || obc[0] == "Nohr Princess") && obc.length > 1) {
+                oc = getSexedClass(getClO(obc[1]).llCl, unit);
             }
         }
     }
