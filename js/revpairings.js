@@ -654,16 +654,22 @@ function newCl(rel, ou, unit, clOpts) {
     var obc = ou.baseClass;
     var oc = getSexedClass(obc[0], unit);
     //if other unit is corrin of fuzzy and not parent child rel
-    if((ou == corrinF || ou == corrinM || ou == keaton || ou == velouria || ou == kaden || ou == selkie || ou == mozu) && rel == "np") {
+    if((ou == corrinF || ou == corrinM || ou == keaton || ou == velouria || ou == kaden || ou == selkie || ou == mozu || ou == azura) && rel == "np") {
         if(obc.length > 1) {
             oc = obc[1];
-            if($.inArray(oc, clOpts) != -1) {
-                oc = getClO(obc[1]).llCl;
+            if(oc == unit.baseClass[0]) {
+                oc = getClO(obc[0]).llCl;
             }
         }
         else {
             return clOpts;
         }
+    }
+    if(rel == "np") {
+        if(oc == unit.baseClass[0]) {
+            oc = obc[1];
+        }
+        return clOpts;
     }
     if(rel == "p" && unit.firstParent.sex == "F") { //if fixed parent is female
         clOpts = [clOpts[0]];
