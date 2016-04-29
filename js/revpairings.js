@@ -377,10 +377,10 @@ function updateInnerChild(kid) {
     for(var i = 0; i < statArr.length; i++) { //for each stat
         var j; //initialize j-- kid's grs
         if(secPar != noPar) { //if second parent is selected
-            j = (kGR[i] + sGR[i]) / 2 + cGR[i]; //sum of the average of kid's grs and second grs and the selected class' grs
+            j = (kGR[i] + sGR[i]) / 2; //average of kid's grs and second grs 
         }        
         else { //if no second parent selected
-            j = kGR[i] + cGR[i]; //sum of kid's grs and selected class' grs
+            j = kGR[i]; //kid's grs
         }
         updateGR(statArr[i], j, kid);
     }
@@ -397,6 +397,14 @@ function updateInnerChild(kid) {
         kid.apb = secPar.apb.slice(0);
         kid.spb = firstPar.spb.slice(0);
     }
+    if(kid == getSecPar(kanaF.vName)) {
+        updateInnerChild(kanaF);
+        updateView(kanaF);
+    }
+    if(kid == getSecPar(kanaM.vName)) {
+        updateInnerChild(kanaM);
+        updateView(kanaM);
+    }
 }
 /* accepts a kid object and updates the information displayed */
 function updateView(kid) {
@@ -405,6 +413,7 @@ function updateView(kid) {
     var modArr = getModArr(kid);
     var baseGRArr = getGRBaseArr(kid);
     var grArr = getGRArrU(kid);
+    var grArrC = getGRArrC(cl);
     var maxClArr = getMaxStatArr(cl);
     $("#" + v + "Name").empty();
     if(kid.isRoyal) { //if royal
@@ -422,7 +431,7 @@ function updateView(kid) {
             j = baseGRArr[i];
         }
         else if($("#" + v + "Type").val() == "grs") {//if grs selected
-            j = grArr[i]; //set to gr
+            j = grArr[i] + grArrC[i]; //set to gr
         }
         else if($("#" + v + "Type").val() == "max") { //if max stats selected
             if(i == 0) { //if i is 0
@@ -645,16 +654,22 @@ function newCl(rel, ou, unit, clOpts) {
     var obc = ou.baseClass;
     var oc = getSexedClass(obc[0], unit);
     //if other unit is corrin of fuzzy and not parent child rel
-    if((ou == corrinF || ou == corrinM || ou == keaton || ou == velouria || ou == kaden || ou == selkie || ou == mozu) && rel == "np") {
+    if((ou == corrinF || ou == corrinM || ou == keaton || ou == velouria || ou == kaden || ou == selkie || ou == mozu || ou == azura) && rel == "np") {
         if(obc.length > 1) {
             oc = obc[1];
-            if($.inArray(oc, clOpts) != -1) {
-                oc = getClO(obc[1]).llCl;
+            if(oc == unit.baseClass[0]) {
+                oc = getClO(obc[0]).llCl;
             }
         }
         else {
             return clOpts;
         }
+    }
+    if(rel == "np") {
+        if(oc == unit.baseClass[0]) {
+            oc = obc[1];
+        }
+        return clOpts;
     }
     if(rel == "p" && unit.firstParent.sex == "F") { //if fixed parent is female
         clOpts = [clOpts[0]];
