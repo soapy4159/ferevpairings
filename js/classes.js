@@ -1187,7 +1187,7 @@ var songstress = {
 var villager = {
     n: "Villager",
     llCl: "Apothecary",
-    promotesTo: [],
+    promotesTo: ["Master of Arms", "Merchant"],
     maxHP: 35,
     maxStr: 19,
     maxMag: 15,
