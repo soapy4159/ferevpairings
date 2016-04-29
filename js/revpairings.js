@@ -669,6 +669,7 @@ function newCl(rel, ou, unit, clOpts) {
         if(oc == unit.baseClass[0]) {
             oc = obc[1];
         }
+        clOpts.push(oc);
         return clOpts;
     }
     if(rel == "p" && unit.firstParent.sex == "F") { //if fixed parent is female
