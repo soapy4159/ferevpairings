@@ -365,8 +365,6 @@ function updateInnerChild(kid) {
     var kGR = getGRBaseArr(kid);
     var sGR = getGRArrU(secPar);
     var cGR = getGRArrC(getCl(v));
-    var boGR = getBoonGRArr(getBoon());
-    var baGR = getBaneGRArr(getBane());
     //calculating mods...
     for(var i = 1; i < statArr.length; i++) { //for each stat
         var j = fMods[i] + sMods[i]; //sum of parents' mods
@@ -379,20 +377,10 @@ function updateInnerChild(kid) {
     for(var i = 0; i < statArr.length; i++) { //for each stat
         var j; //initialize j-- kid's grs
         if(secPar != noPar) { //if second parent is selected
-            if(kid == kanaF || kid == kanaM) { //if kana
-                j = (kGR[i] + sGR[i] + boGR[i] + baGR[i]) / 2 + cGR[i]; //sum of the average of kana's grs, second parent's grs, boon/bane grs, and the selected class' grs
-            }
-            else { //not kana
-                j = (kGR[i] + sGR[i]) / 2 + cGR[i]; //sum of the average of kid's grs and second grs and the selected class' grs
-            }
-        }
+            j = (kGR[i] + sGR[i]) / 2 + cGR[i]; //sum of the average of kid's grs and second grs and the selected class' grs
+        }        
         else { //if no second parent selected
-            if(kid == kanaF || kid == kanaM) { //if kana
-                j = kGR[i] + boGR[i] + baGR[i] + cGR[i]; //sum of kana's grs, boon/bane grs, and selected class' grs
-            }
-            else { //not kana
-                j = kGR[i] + cGR[i]; //sum of kid's grs and selected class' grs
-            }
+            j = kGR[i] + cGR[i]; //sum of kid's grs and selected class' grs
         }
         updateGR(statArr[i], j, kid);
     }
