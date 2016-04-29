@@ -758,7 +758,9 @@ function addClOpts(clOpts, unit) {
     $(sel).empty();
     for(var i = 0; i < clOpts.length; i++) {
         if(clOpts[i] != "-") {
-            fullClOpts.push(getSexedClass(clOpts[i], unit));
+            if($.inArray(getSexedClass(clOpts[i], unit), fullClOpts) == -1) {
+                fullClOpts.push(getSexedClass(clOpts[i], unit));
+            }
             for(var j = 0; j < getClO(clOpts[i]).promotesTo.length; j++) {
                 if($.inArray(getSexedClass(getClO(clOpts[i]).promotesTo[j], unit), fullClOpts) == -1) {
                     fullClOpts.push(getSexedClass(getClO(clOpts[i]).promotesTo[j], unit));
