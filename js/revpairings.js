@@ -417,7 +417,6 @@ function updateView(kid) {
     var modArr = getModArr(kid);
     var baseGRArr = getGRBaseArr(kid);
     var grArr = getGRArrU(kid);
-    var grArrC = getGRArrC(cl);
     var maxClArr = getMaxStatArr(cl);
     $("#" + v + "Name").empty();
     if(kid.isRoyal) { //if royal
@@ -435,7 +434,7 @@ function updateView(kid) {
             j = baseGRArr[i];
         }
         else if($("#" + v + "Type").val() == "grs") {//if grs selected
-            j = grArr[i] + grArrC[i]; //set to gr
+            j = grArr[i]; //set to gr
         }
         else if($("#" + v + "Type").val() == "max") { //if max stats selected
             if(i == 0) { //if i is 0
