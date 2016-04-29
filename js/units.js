@@ -1324,7 +1324,7 @@ var ryoma = {
 var scarlet = {
     n: "Scarlet",
     vName: "scarlet",
-    baseClass: ["Wyvern Rider", "Outlaw"],
+    baseClass: ["Wyvern Rider", "Outlaw", "Knight"],
     bff: [],
     sRank: ["Corrin (M)"],
     strMod: 2,
@@ -1353,7 +1353,7 @@ var scarlet = {
 var yukimura = {
     n: "Yukimura",
     vName: "yukimura",
-    baseClass: ["Apothecary",  "Samurai"],
+    baseClass: ["Apothecary", "Samurai", "Monk"],
     bff: [],
     sRank: ["Corrin (F)"],
     strMod: -1,
