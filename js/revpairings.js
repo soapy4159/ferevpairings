@@ -482,7 +482,14 @@ function updateTalent() {
     }
     $(".spl").each(function() {
         var u = $(this).val();
-        if(u == corrinF.n || u == corrinM.n) {
+        if(u == corrinF.n || u == corrinM.n || u == kanaF.n || u == kanaM.n) {
+            var unit = getUnitO($(this).data("unit"));
+            clDir("spl", unit);
+        }
+    });
+    $(".apl").each(function() {
+        var u = $(this).val();
+        if(u == kanaF.n || u == kanaM.n) {
             var unit = getUnitO($(this).data("unit"));
             clDir("spl", unit);
         }
@@ -654,7 +661,7 @@ function newCl(rel, ou, unit, clOpts) {
     var obc = ou.baseClass;
     var oc = getSexedClass(obc[0], unit);
     //if other unit is corrin of fuzzy and not parent child rel
-    if((ou == corrinF || ou == corrinM || ou == keaton || ou == velouria || ou == kaden || ou == selkie || ou == mozu || ou == azura) && rel == "np") {
+    if((ou == corrinF || ou == corrinM || ou == keaton || ou == velouria || ou == kaden || ou == selkie || ou == mozu || ou == azura || ou == kanaF || ou == kanaM) && rel == "np") {
         if(obc.length > 1) {
             oc = obc[1];
             if(oc == unit.baseClass[0]) {
