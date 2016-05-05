@@ -4,7 +4,7 @@ var corrinF = {
     vName: "corrinF",
     baseClass: ["Nohr Princess"],
     bff: [],
-    sRank: ["Gunter", "Jakob", "Kaze", "Silas", "Shura", "Izana", "Arthur", "Odin", "Niles", "Laslow", "Benny", "Leo", "Keaton", "Xander", "Subaki", "Saizo", "Azama", "Hayato", "Hinata", "Takumi", "Kaden", "Ryoma", "Yukimura", "Shigure", "Dwyer", "Siegbert", "Forest", "Ignatius", "Percy", "Shiro", "Kiragi", "Asugi", "Hisame", "Rhajat"],
+    sRank: ["Gunter", "Jakob", "Kaze", "Silas", "Shura", "Izana", "Arthur", "Odin", "Niles", "Laslow", "Benny", "Leo", "Keaton", "Xander", "Subaki", "Saizo", "Azama", "Hayato", "Hinata", "Takumi", "Kaden", "Ryoma", "Yukimura", "Shigure", "Dwyer", "Siegbert", "Forrest", "Ignatius", "Percy", "Shiro", "Kiragi", "Asugi", "Hisame", "Rhajat"],
     strMod: 0,
     magMod: 0,
     sklMod: 0,
@@ -2340,6 +2340,9 @@ var allUnits = [corrinF, corrinM, gunter, felicia, jakob, kaze, azura, silas, sh
 var allParents = [corrinF, corrinM, gunter, felicia, jakob, kaze, azura, silas, shura, izana, mozu, elise, arthur, effie, odin, niles, nyx, camilla, selena, beruka, laslow, peri, benny, charlotte, leo, keaton, xander, flora, dwyer, shigure, sophie, midori, siegbert, forrest, ignatius, velouria, percy, ophelia, soleil, nina, rinkah, sakura, hana, subaki, saizo, orochi, hinoka, azama, setsuna, hayato, oboro, hinata, takumi, kagero, reina, kaden, ryoma, scarlet, yukimura, shiro, kiragi, asugi, selkie, hisame, mitama, caeldori, rhajat, fuga, anna];
 var allFG = [corrinF, corrinM, gunter, felicia, jakob, kaze, azura, silas, shura, izana, mozu, elise, arthur, effie, odin, niles, nyx, camilla, selena, beruka, laslow, peri, benny, charlotte, leo, keaton, xander, flora, rinkah, sakura, hana, subaki, saizo, orochi, hinoka, azama, setsuna, hayato, oboro, hinata, takumi, kagero, reina, kaden, ryoma, scarlet, yukimura, fuga, anna];
 var allKiddies = [kanaF, kanaM, dwyer, shigure, sophie, midori, siegbert, forrest, ignatius, velouria, percy, ophelia, soleil, nina, shiro, kiragi, asugi, selkie, hisame, mitama, caeldori, rhajat];
+var allC = [corrinF, corrinM, gunter, felicia, jakob, kaze, azura, silas, shura, izana, mozu, elise, arthur, effie, odin, niles, nyx, camilla, selena, beruka, laslow, peri, benny, charlotte, leo, keaton, xander, flora, kanaF, kanaM, dwyer, shigure, sophie, midori, siegbert, forrest, ignatius, velouria, percy, ophelia, soleil, nina];
+var allB = [corrinF, corrinM, gunter, felicia, jakob, kaze, azura, silas, shura, izana, mozu, rinkah, sakura, hana, subaki, saizo, orochi, hinoka, azama, setsuna, hayato, oboro, hinata, takumi, kagero, reina, kaden, ryoma, scarlet, yukimura, kanaF, kanaM, dwyer, shigure, sophie, midori, shiro, kiragi, asugi, selkie, hisame, mitama, caeldori, rhajat];
+var allR = [corrinF, corrinM, felicia, jakob, kaze, azura, silas, shura, mozu, elise, arthur, effie, odin, niles, nyx, camilla, selena, beruka, laslow, peri, benny, charlotte, leo, keaton, xander, flora, rinkah, sakura, hana, subaki, saizo, orochi, hinoka, azama, setsuna, hayato, oboro, hinata, takumi, kagero, reina, kaden, ryoma, scarlet, kanaF, kanaM, dwyer, shigure, sophie, midori, siegbert, forrest, ignatius, velouria, percy, ophelia, soleil, nina, shiro, kiragi, asugi, selkie, hisame, mitama, caeldori, rhajat];
 /* accepts unit object and returns array of unit's base growth rates */
 function getGRBaseArr(unit) {
     return [unit.baseHPGR, unit.baseStrGR, unit.baseMagGR, unit.baseSklGR, unit.baseSpdGR, unit.baseLckGR, unit.baseDefGR, unit.baseResGR];
