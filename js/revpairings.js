@@ -7,22 +7,59 @@
 $(document).ready(function() { //on document load
     createPage();
     createFG();
+    gogo();
     gogogo(); //gogogo!!
-}); 
-function gogogo() {
+});
+function gogo() {
     fillBoonBaneTalent(); //add option tags to boon/bane/talent select boxes
     fillBBTable(); //display boon/bane information
     $("#boonSelect").change(updateBoonBane); //assign event handler
     $("#baneSelect").change(updateBoonBane); //""
     $("#talentSelect").change(updateTalent); //""
+    $("#toggleFG").click(function() { //assign event handler
+        $("#ffs").toggle(); //hide or expand first gen table
+        if($(this).text() == "-") { //if was expanded
+            $(this).text("+");
+            $("#fgShowHide").text("Show");
+        }
+        else { //otherwise
+            $(this).text("-");
+            $("#fgShowHide").text("Hide");
+        }
+    });
+    $("#toggleK").click(function() { //assign event handler
+        $("#kds").toggle(); //hides or expands kid table
+        if($(this).text() == "-") { //if was expanded
+            $(this).text("+");
+            $("#kidsShowHide").text("Show");
+        }
+        else { //otherwise
+            $(this).text("-");
+            $("#kidsShowHide").text("Hide");
+        }
+    });
+    $("#game").change(function() {
+        $(".stats").each(function() {
+            this.remove();
+        });
+        createPage();
+        createFG();
+        updateTalent();
+        gogogo();
+    });
+
+}
+function gogogo() {
     $(".typeK").each(function() { //for each display option
         var kid = getUnitO($(this).data("unit"));
         //creating and appending type option tags...
         $(this).append($("<option></option>").val("mods").text("Stat Modifiers"));
         $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
+        $(this).append($("<option></option>").val("indgrs").text("Individual Growth Rates"));
         $(this).append($("<option></option>").val("grs").text("Effective Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
-        $(this).append($("<option></option>").val("pb").text("Max Pair Up Bonuses"));
+        $(this).append($("<option></option>").val("indpb").text("Individual Pair Up Bonuses"));
+        $(this).append($("<option></option>").val("pb").text("Effective Pair Up Bonuses"));
         $(this).change(function() { //assign event handler
             updateInnerChild(kid);
             updateView(kid)
@@ -32,10 +69,11 @@ function gogogo() {
         var unit = getUnitO($(this).data("unit"));
         //creating and appending type option tags...
         $(this).append($("<option></option>").val("mods").text("Stat Modifiers"));
-        $(this).append($("<option></option>").val("bases").text("Base Growth Rates"));
+        $(this).append($("<option></option>").val("indgrs").text("Individual Growth Rates"));
         $(this).append($("<option></option>").val("grs").text("Effective Growth Rates"));
         $(this).append($("<option></option>").val("max").text("Max Stats"));
-        $(this).append($("<option></option>").val("pb").text("Max Pair Up Bonuses"));
+        $(this).append($("<option></option>").val("indpb").text("Individual Pair Up Bonuses"));
+        $(this).append($("<option></option>").val("pb").text("Effective Pair Up Bonuses"));
         $(this).change(function() { //assign event handler
             updateViewF(unit);
         });
@@ -72,121 +110,99 @@ function gogogo() {
         });
     });
     $(".apl").each(function() { //for each bff select
+        var g = $("#game").val();
         var unit = getUnitO($(this).data("unit"));
         var noBFF = document.createElement("option");
         $(noBFF).val("-").text("-");
         $(this).append(noBFF);
         for(var i = 0; i < unit.bff.length; i++) { //fill options
-            var opt = document.createElement("option");
-            $(opt).val(unit.bff[i]).text(unit.bff[i]);
-            $(this).append(opt);
+            var x = getUnitO(unit.bff[i]);
+            if((g == "r" && $.inArray(x, allR) != -1) || (g == "c" && $.inArray(x, allC) != -1) || (g == "b" && $.inArray(x, allB) != -1)) {
+                var opt = document.createElement("option");
+                $(opt).val(x.n).text(x.n);
+                $(this).append(opt);
+            }
         }
         $(this).change(function() { //assign event handler
             clDir("apl", unit);
         });
     });
     $(".spl").each(function() { //for each s select
+        var g = $("#game").val();
         var unit = getUnitO($(this).data("unit"));
         var noLove = document.createElement("option");
         $(noLove).val("-").text("-");
         $(this).append(noLove);
         for(var i = 0; i < unit.sRank.length; i++) { //fill options
-            var opt = document.createElement("option");
-            $(opt).val(unit.sRank[i]).text(unit.sRank[i]);
-            $(this).append(opt);
+            var x = getUnitO(unit.sRank[i]);
+            if((g == "r" && $.inArray(x, allR) != -1) || (g == "c" && $.inArray(x, allC) != -1) || (g == "b" && $.inArray(x, allB) != -1)) {
+                var opt = document.createElement("option");
+                $(opt).val(x.n).text(x.n);
+                $(this).append(opt);
+            }
         }
         $(this).change(function() { //assign event handler
             clDir("spl", unit);
         });
     });
-    $("#toggleSpoiler").click(function() { //assign event handler
-        $("#revSpoiler").toggle(); //hide or expand spoiler div
-        if($(this).text() == "+") { //if was hidden
-            $(this).text("-");
-            $("#revShowHide").text("Hide");
-        }
-        else { //otherwise
-            $(this).text("+");
-            $("#revShowHide").text("Show");
-        }
-    });
-    $("#toggleFG").click(function() { //assign event handler
-        $("#ffs").toggle(); //hide or expand first gen table
-        if($(this).text() == "-") { //if was expanded
-            $(this).text("+");
-            $("#fgShowHide").text("Show");
-        }
-        else { //otherwise
-            $(this).text("-");
-            $("#fgShowHide").text("Hide");
-        }
-    });
-    $("#toggleK").click(function() { //assign event handler
-        $("#kds").toggle(); //hides or expands kid table
-        if($(this).text() == "-") { //if was expanded
-            $(this).text("+");
-            $("#kidsShowHide").text("Show");
-        }
-        else { //otherwise
-            $(this).text("-");
-            $("#kidsShowHide").text("Hide");
-        }
-    });
 }
 var statArr = ["HP", "Str", "Mag", "Skl", "Spd", "Lck", "Def", "Res"]; //array of all stats, used to assign/display stats using loops
 function createPage() {
+    var g = $("#game").val();
     for(var i = 0; i < allKiddies.length; i++) { //for each kid
         var kiddo = allKiddies[i];
-        var kid = kiddo.vName;
-        var row = document.createElement("tr") //make table row for kid
-        $(row).attr("id", kid + "Stats").addClass("stats"); //add attrs
-        if(i % 2 == 0) { //if even
-            $(row).addClass("even"); //add even class
+        if((g == "r" && $.inArray(kiddo, allR) != -1) || (g == "c" && $.inArray(kiddo, allC) != -1) || (g == "b" && $.inArray(kiddo, allB) != -1)) {
+            var kid = kiddo.vName;
+            var row = document.createElement("tr") //make table row for kid
+            $(row).attr("id", kid + "Stats").addClass("stats"); //add attrs
+            if(i % 2 == 0) { //if even
+                $(row).addClass("even"); //add even class
+            }
+            else { //if odd
+                $(row).addClass("odd"); //add odd class
+            }
+            var kidName = document.createElement("td"); //make table column for kid name
+            if(kiddo.isRoyal) { //if royal
+                $(kidName).attr("id", kid + "Name").addClass("n").text(kiddo.n + "*"); //add attrs
+            }
+            else {
+                $(kidName).attr("id", kid + "Name").addClass("n").text(kiddo.n); //add attrs
+            }
+            var fp = document.createElement("td"); //make td for first parent name
+            if(kiddo.firstParent.isRoyal) {
+                $(fp).addClass("n").text(kiddo.firstParent.n + "*"); //add attrs
+            }
+            else {
+                $(fp).addClass("n").text(kiddo.firstParent.n); //add attrs
+            }
+            var secParCol = document.createElement("td"); //make td for second parent select
+            var secParSelect = document.createElement("select"); //make second parent select
+            $(secParSelect).attr("id", kid + "SecPar").attr("data-unit", kiddo.n).addClass("sp"); //add attrs
+            $(secParCol).append(secParSelect); //append to second parent select td
+            var apl = document.createElement("td"); //make td for apl select
+            var aplSelect = document.createElement("select"); //make apl select
+            $(aplSelect).attr("id", kid + "Apl").attr("data-unit", kiddo.n).addClass("apl");
+            $(apl).append(aplSelect);
+            var spl = document.createElement("td"); //make td for spl select
+            var splSelect = document.createElement("select"); //make spl select
+            $(splSelect).attr("id", kid + "Spl").attr("data-unit", kiddo.n).addClass("spl");
+            $(spl).append(splSelect);
+            var cl = document.createElement("td"); //make td for class select
+            var clSelect = document.createElement("select"); //make class select
+            $(clSelect).attr("id", kid + "Class").attr("data-unit", kiddo.n).addClass("clK"); //add attrs
+            $(cl).append(clSelect); //append to class td
+            var type = document.createElement("td"); //make td for type select
+            var typeSelect = document.createElement("select"); //make type select
+            $(typeSelect).attr("id", kid + "Type").attr("data-unit", kiddo.n).addClass("typeK"); //add attrs
+            $(type).append(typeSelect); //append to type td
+            $(row).append(kidName).append(fp).append(secParCol).append(apl).append(spl).append(cl).append(type); //append tds to tr
+            for(var j = 0; j < statArr.length; j++) { //for each stat
+                var statCol = document.createElement("td"); //create td for stat display
+                $(statCol).attr("id", kid + statArr[j]).addClass("sv"); //add attrs
+                $(row).append(statCol); //append to row
+            }
+            $("#kiddies").append(row); //append row to table
         }
-        else { //if odd
-            $(row).addClass("odd"); //add odd class
-        }
-        var kidName = document.createElement("td"); //make table column for kid name
-        if(kiddo.isRoyal) { //if royal
-            $(kidName).attr("id", kid + "Name").addClass("n").text(kiddo.n + "*"); //add attrs
-        }
-        else {
-            $(kidName).attr("id", kid + "Name").addClass("n").text(kiddo.n); //add attrs
-        }
-        var fp = document.createElement("td"); //make td for first parent name
-        if(kiddo.firstParent.isRoyal) {
-            $(fp).addClass("n").text(kiddo.firstParent.n + "*"); //add attrs
-        }
-        else {
-            $(fp).addClass("n").text(kiddo.firstParent.n); //add attrs
-        }
-        var secParCol = document.createElement("td"); //make td for second parent select
-        var secParSelect = document.createElement("select"); //make second parent select
-        $(secParSelect).attr("id", kid + "SecPar").attr("data-unit", kiddo.n).addClass("sp"); //add attrs
-        $(secParCol).append(secParSelect); //append to second parent select td
-        var apl = document.createElement("td"); //make td for apl select
-        var aplSelect = document.createElement("select"); //make apl select
-        $(aplSelect).attr("id", kid + "Apl").attr("data-unit", kiddo.n).addClass("apl");
-        $(apl).append(aplSelect);
-        var spl = document.createElement("td"); //make td for spl select
-        var splSelect = document.createElement("select"); //make spl select
-        $(splSelect).attr("id", kid + "Spl").attr("data-unit", kiddo.n).addClass("spl");
-        $(spl).append(splSelect);
-        var cl = document.createElement("td"); //make td for class select
-        var clSelect = document.createElement("select"); //make class select
-        $(clSelect).attr("id", kid + "Class").attr("data-unit", kiddo.n).addClass("clK"); //add attrs
-        $(cl).append(clSelect); //append to class td
-        var type = document.createElement("td"); //make td for type select
-        var typeSelect = document.createElement("select"); //make type select
-        $(typeSelect).attr("id", kid + "Type").attr("data-unit", kiddo.n).addClass("typeK"); //add attrs
-        $(type).append(typeSelect); //append to type td
-        $(row).append(kidName).append(fp).append(secParCol).append(apl).append(spl).append(cl).append(type); //append tds to tr
-        for(var j = 0; j < statArr.length; j++) { //for each stat
-            var statCol = document.createElement("td"); //create td for stat display
-            $(statCol).attr("id", kid + statArr[j]).addClass("sv"); //add attrs
-            $(row).append(statCol); //append to row
-        }
-        $("#kiddies").append(row); //append row to table
     }
 }
 function fillBoonBaneTalent() {
@@ -250,10 +266,14 @@ function updateBoonBane() {
 }
 /* accepts a kid object and adds parent option tags and updates mods from first parent */
 function fillKid(kid) {
+    var g = $("#game").val();
     var v = kid.vName;
+    $("#" + v + "SecPar").append($("<option></option>").val("-").text("-"));
     for(var i = 0; i < kid.secondParent.length; i++) { //for each parent option
-        var secPar = kid.secondParent[i];
-        $("#" + v + "SecPar").append($("<option></option>").val(secPar).text(secPar).attr("data-optNo", i)); //add parent option tag
+        var secPar = getUnitO(kid.secondParent[i]);
+        if((g == "r" && $.inArray(secPar, allR) != -1) || (g == "c" && $.inArray(secPar, allC) != -1) || (g == "b" && $.inArray(secPar, allB) != -1)) {
+            $("#" + v + "SecPar").append($("<option></option>").val(secPar.n).text(secPar.n).attr("data-optNo", i)); //add parent option tag
+        }
     }
     var fMods = getModArr(kid.firstParent); 
     var j; //initialize j-- mod
@@ -427,8 +447,11 @@ function updateView(kid) {
         if($("#" + v + "Type").val() == "mods") {//if mods selected
             j = modArr[i]; //set to stat mod
         }
-        else if($("#" + v + "Type").val() == "bases") {
+        else if($("#" + v + "Type").val() == "bases") { //if base grs selected
             j = baseGRArr[i];
+        }
+        else if($("#" + v + "Type").val() == "indgrs") { //if individual grs selected
+            j = grArr[i];
         }
         else if($("#" + v + "Type").val() == "grs") {//if grs selected
             j = grArr[i] + grArrC[i]; //set to gr
@@ -439,6 +462,14 @@ function updateView(kid) {
             }
             else { //if not
                 j = maxClArr[i] + modArr[i]; //set to max stat + mod
+            }
+        }
+        else if($("#" + v + "Type").val() == "indpb") { //if individual pair up bonuses selected
+            if(i == 0) {
+                j = "-";
+            }
+            else {
+                j = kid.cpb[i - 1] + kid.bpb[i - 1] + kid.apb[i - 1] + kid.spb[i - 1];
             }
         }
         else { //if pair up bonuses selected
@@ -548,47 +579,73 @@ function updateGR(gr, val, unit) {
 }
 /* creates the fgTable */
 function createFG() {
+    var g = $("#game").val();
+    var k = 0;
     for(var i = 0; i < allFG.length; i++) { //for each fg
         var unit = allFG[i];
-        var unitV = unit.vName;
-        var row = document.createElement("tr"); //made tr for fg
-        $(row).attr("id", unitV + "Stats").addClass("stats"); //assign props
-        if(i % 2 == 0) { //if even
-            $(row).addClass("even"); //add even class
+        if((g == "r" && $.inArray(unit, allR) != -1) || (g == "c" && $.inArray(unit, allC) != -1) || (g == "b" && $.inArray(unit, allB) != -1)) {
+            var unitV = unit.vName;
+            if(k % 20 == 0) {
+                var header = document.createElement("tr");
+                $(header).addClass("stats");
+                var utd = document.createElement("td");
+                $(utd).text("Unit");
+                var atd = document.createElement("td");
+                $(atd).text("A+ Rank");
+                var srtd = document.createElement("td");
+                $(srtd).text("S Rank");
+                var ctd = document.createElement("td");
+                $(ctd).text("Class");
+                var ttd = document.createElement("td");
+                $(ttd).text("Displaying");
+                $(header).append(utd).append(atd).append(srtd).append(ctd).append(ttd);
+                for(var j = 0; j < statArr.length; j++) {
+                    var sv = document.createElement("td");
+                    $(sv).addClass("sv").text(statArr[j]);
+                    $(header).append(sv);
+                }
+                $("#firstGen").append(header);
+            }
+            var row = document.createElement("tr"); //made tr for fg
+            $(row).attr("id", unitV + "Stats").addClass("stats"); //assign props
+            if(k % 2 == 0) { //if even
+                $(row).addClass("even"); //add even class
+            }
+            else { //if odd
+                $(row).addClass("odd"); //add odd class
+            }
+            var fgName = document.createElement("td"); //make td to display name
+            if(unit.isRoyal) {
+                $(fgName).addClass("n").text(unit.n + "*"); //assign props
+            }
+            else {
+                $(fgName).addClass("n").text(unit.n); //assign props
+            }
+            var apl = document.createElement("td"); //make td for apl select
+            var aplSelect = document.createElement("select"); //make apl select
+            $(aplSelect).attr("id", unitV + "Apl").attr("data-unit", unit.n).addClass("apl");
+            $(apl).append(aplSelect);
+            var spl = document.createElement("td"); //make td for spl select
+            var splSelect = document.createElement("select"); //make spl select
+            $(splSelect).attr("id", unitV + "Spl").attr("data-unit", unit.n).addClass("spl");
+            $(spl).append(splSelect);
+            var cl = document.createElement("td"); //make td for class select
+            var clSelect = document.createElement("select"); //make class select for fg
+            $(clSelect).attr("id", unitV + "Class").attr("data-unit", unit.n).addClass("clF"); //assign props
+            $(cl).append(clSelect); //append to td
+            var type = document.createElement("td"); //make td for display select
+            var typeSelect = document.createElement("select"); //make display select
+            $(typeSelect).attr("id", unitV + "Type").attr("data-unit", unit.n).addClass("typeF"); //assign props
+            $(type).append(typeSelect); //append to td
+            $(row).append(fgName).append(apl).append(spl).append(cl).append(type); //append to row
+            for(var j = 0; j < statArr.length; j++) { //for each stat
+                var statCol = document.createElement("td"); //create td for stat display
+                $(statCol).attr("id", unitV + statArr[j]).addClass("sv"); //add attrs
+                $(row).append(statCol); //append to row
+            }
+            k++;
+            $("#firstGen").append(row); //append to table
         }
-        else { //if odd
-            $(row).addClass("odd"); //add odd class
-        }
-        var fgName = document.createElement("td"); //make td to display name
-        if(unit.isRoyal) {
-            $(fgName).addClass("n").text(unit.n + "*"); //assign props
-        }
-        else {
-            $(fgName).addClass("n").text(unit.n); //assign props
-        }
-        var apl = document.createElement("td"); //make td for apl select
-        var aplSelect = document.createElement("select"); //make apl select
-        $(aplSelect).attr("id", unitV + "Apl").attr("data-unit", unit.n).addClass("apl");
-        $(apl).append(aplSelect);
-        var spl = document.createElement("td"); //make td for spl select
-        var splSelect = document.createElement("select"); //make spl select
-        $(splSelect).attr("id", unitV + "Spl").attr("data-unit", unit.n).addClass("spl");
-        $(spl).append(splSelect);
-        var cl = document.createElement("td"); //make td for class select
-        var clSelect = document.createElement("select"); //make class select for fg
-        $(clSelect).attr("id", unitV + "Class").attr("data-unit", unit.n).addClass("clF"); //assign props
-        $(cl).append(clSelect); //append to td
-        var type = document.createElement("td"); //make td for display select
-        var typeSelect = document.createElement("select"); //make display select
-        $(typeSelect).attr("id", unitV + "Type").attr("data-unit", unit.n).addClass("typeF"); //assign props
-        $(type).append(typeSelect); //append to td
-        $(row).append(fgName).append(apl).append(spl).append(cl).append(type); //append to row
-        for(var j = 0; j < statArr.length; j++) { //for each stat
-            var statCol = document.createElement("td"); //create td for stat display
-            $(statCol).attr("id", unitV + statArr[j]).addClass("sv"); //add attrs
-            $(row).append(statCol); //append to row
-        }
-        $("#firstGen").append(row); //append to table
     }
 }
 /* update displayed information of fg unit */
@@ -604,7 +661,7 @@ function updateViewF(unit) {
         if($("#" + v + "Type").val() == "mods") { //mods selected
             j = modArrU[i];
         }
-        else if($("#" + v + "Type").val() == "bases") {
+        else if($("#" + v + "Type").val() == "indgrs") { //if individual grs selected
             j = grArrU[i];
         }
         else if($("#" + v + "Type").val() == "grs") { //if grs selected
@@ -618,7 +675,15 @@ function updateViewF(unit) {
                 j = maxStatArr[i] + modArrU[i];
             }
         }
-        else {
+        else if($("#" + v + "Type").val() == "indpb") { //if individual pb selected
+            if(i == 0) {
+                j = "-";
+            }
+            else {
+                j = unit.cpb[i - 1] + unit.bpb[i - 1] + unit.apb[i - 1] + unit.spb[i - 1];
+            }
+        }
+        else { //if pb selected
             if(i == 0) {
                 j = "-";
             }
