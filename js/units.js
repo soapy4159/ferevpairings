@@ -1,4 +1,4 @@
-//units2.js
+//units.js
 var corrinF = {
     n: "Corrin (F)",
     vName: "corrinF",
@@ -1663,7 +1663,7 @@ var midori = {
     firstParent: kaze,
     secondParent: ["-", "Azura", "Beruka", "Camilla", "Charlotte", "Corrin (F)", "Effie", "Elise", "Felicia", "Hana", "Hinoka", "Kagero", "Mozu", "Nyx", "Oboro", "Orochi", "Peri", "Rinkah", "Selena", "Sakura", "Setsuna"],
     bff: ["Kana (F)", "Ophelia", "Selkie"],
-    sRank: ["Corrin (M)", "Kana (M)", "Shigure", "Dwyer", "Siegbert", "Forrest", "Ignatius", "Percy", "Shiro", "Asugi", "Hisame"],
+    sRank: ["Corrin (M)", "Kana (M)", "Shigure", "Dwyer", "Siegbert", "Forrest", "Ignatius", "Percy", "Shiro", "Kiragi", "Asugi", "Hisame"],
     baseHPGR: 45,
     baseStrGR: 35,
     baseMagGR: 5,
