@@ -889,7 +889,7 @@ var hana = {
     n: "Hana",
     vName: "hana",
     baseClass: ["Samurai", "Shrine Maiden"],
-    bff: ["Sakura", "Setsuna", "Effie"],
+    bff: ["Felicia", "Sakura", "Setsuna", "Effie"],
     sRank: ["Corrin (M)", "Jakob", "Silas", "Kaze", "Ryoma", "Takumi", "Saizo", "Kaden", "Hinata", "Azama", "Subaki", "Hayato", "Laslow", "Keaton"],
     strMod: 1,
     magMod: 0,
